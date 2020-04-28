@@ -1,0 +1,33 @@
+section#content {
+  display:grid;
+  grid-template-columns: 11cm 0.5cm 7.5cm;
+  grid-template-rows: auto;
+  font-size:13pt;
+  zoom:160%;
+}
+section#content div#document {
+  grid-column:1;
+  grid-row:1;
+  height: auto;
+  width:100%;
+  text-align: justify;
+  user-select:none;
+  -webkit-user-select: none;
+}
+section#content div#comments {
+  grid-column:3;
+  grid-row:1;
+  height:auto;
+  width:100%;
+  text-align:justify;
+  font-size: 0.85em;
+}
+
+section#tools {
+  position:fixed;
+  bottom:0;
+  width:100%;
+  height: 60px;
+  background-color:grey;
+  text-align:right;
+}
