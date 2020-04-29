@@ -2,13 +2,15 @@
 
   Trouver de l'aide sur https://developer.chrome.com/apps[/fileSystem]
 **/
-chrome.app.runtime.onLaunched.addListener(function() {
+chrome.app.runtime.onLaunched.addListener(function(launchData) {
   chrome.app.window.create('index.htm', {
     'id': "doctagger-window",
     'bounds': {
       'width': 1400,
-      'height': 800
+      'height': 400
     }
+  }, function(win){
+    win.contentWindow.launchData = launchData;
   });
 });
 

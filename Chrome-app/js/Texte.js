@@ -1,7 +1,10 @@
+'use strict';
+
+let texte ;
 
 class Texte {
   static init(){
-    const texte = new Texte('#document')
+    texte = new Texte('#document')
     texte.traite();
     // On observe les boutons
     DGet('#btn-deselect').addEventListener('click', Mot.deselectAll.bind(Mot))
@@ -10,18 +13,29 @@ class Texte {
   /**
     Méthode appelée pour choisir un texte et l'ouvrir
   **/
-  static chooseFileAndOpen(){
+  static async chooseFileAndOpen(){
+    let fileHandle;
     chooseFileToOpen(this.openFileChoosed.bind(this)) // dans io.js pour le moment
   }
   static openFileChoosed(ret){
-    onChoosedFileToOpen(ret, this.setTexte.bind(this))
+    console.log("-> openFileChoosed")
+    onChoosedFileToOpen(ret, this.defineTexte.bind(this))
   }
-  static setTexte(texte){
-    document.querySelector('#document').innerHTML = texte
+  static defineTexte(string){
+    texte = new Texte('#document')
+    texte.setContent(string)
+    texte.traite()
   }
   // ---------------------------------------------------------------------
   constructor(conteneur){
     this.container = DGet(conteneur)
+  }
+  setContent(string){
+    string = string.replace(/\r?\n/g,'<br>')
+    this.obj.innerHTML = string
+  }
+  get obj(){
+    return this._obj || (this._obj = document.querySelector('#document') )
   }
   get content(){
     return this._content || (this._content = this.container.innerHTML)

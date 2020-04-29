@@ -4,11 +4,12 @@
   "name":"DocTagger",
   "description":"Pour commenter un texte",
   "version":"0.0.1",
+  "minimum_chrome_version": "81",
   "app":{
     "background":{
       "scripts":["background.js"]
     }
   },
-  "permissions": ["storage", "unlimitedStorage", {"fileSystem": ["write"]}],
+  "permissions": ["storage", "unlimitedStorage", {"fileSystem": ["write", "directory", "retainEntries"]}],
   "icons": {"128":"icon-128.png"}
 }

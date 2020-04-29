@@ -14,4 +14,6 @@ window.addEventListener("DOMContentLoaded", (event) => {
   Texte.init()
   FormComment.init()
   Comment.init()
+  loadInitialFile(launchData)
+  // loadInitialFile()
 });
