@@ -7,6 +7,18 @@ class Texte {
     DGet('#btn-deselect').addEventListener('click', Mot.deselectAll.bind(Mot))
   }
 
+  /**
+    Méthode appelée pour choisir un texte et l'ouvrir
+  **/
+  static chooseFileAndOpen(){
+    chooseFileToOpen(this.openFileChoosed.bind(this)) // dans io.js pour le moment
+  }
+  static openFileChoosed(ret){
+    onChoosedFileToOpen(ret, this.setTexte.bind(this))
+  }
+  static setTexte(texte){
+    document.querySelector('#document').innerHTML = texte
+  }
   // ---------------------------------------------------------------------
   constructor(conteneur){
     this.container = DGet(conteneur)

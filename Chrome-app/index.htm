@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="./css/common.css">
   <link rel="stylesheet" href="./css/main.css">
   <link rel="stylesheet" href="./css/mot.css">
+  <link rel="stylesheet" href="./css/form_comment.css">
 <body>
 
 <section id="content">
@@ -25,13 +26,45 @@ Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor 
 </section>
 
 <section id="tools">
+  <input type="button" id="btn-open" value="Ouvrir…">
   <button id="btn-deselect" type="button" class="small">Déselectionner</button>
+  <input type="text" id="comment-auteur" value="PP" placeholder="Vos initiales">
 </section>
+
+
+<!--
+  FORMULAIRE D'ÉDITION/CRÉATION DE COMMENTAIRE
+ -->
+<div id="form-comment" class="form closed">
+  <input type="hidden" id="comment-id" name="comment-id" value="">
+  <div class="row">
+    <!-- Menu pour le type de commentaire -->
+    <span class="libelle">Type</span>
+    <select id="comment-type" name="comment-type"></select>
+    <!-- Menu pour l'intensité -->
+    <span class="libelle">Intensité</span>
+    <select id="comment-intensity" name="comment-intensity">
+      <option value="1">faible</option>
+      <option value="5">moyen</option>
+      <option value="9">fort</option>
+    </select>
+  </div>
+  <div class="row">
+    <textarea id="comment-content" name="comment-content"></textarea>
+  </div>
+  <div class="row buttons">
+    <button id="btn-save-comment" type="button" class="main">Enregistrer</button>
+  </div>
+  <div style="clear:both;"></div>
+</div>
 
 <script type="text/javascript" src="./js/main.js"></script>
 <script type="text/javascript" src="./js/Mot.js"></script>
 <script type="text/javascript" src="./js/Texte.js"></script>
-<script type="text/javascript" src="./js/Ajax.js"></script>
+<script type="text/javascript" src="./js/io.js"></script>
+<script type="text/javascript" src="./js/UI.js"></script>
 <script type="text/javascript" src="./js/jquery-min.js"></script>
+<script type="text/javascript" src="./js/Comment.js"></script>
+<script type="text/javascript" src="./js/FormComment.js"></script>
 </body>
 </html>

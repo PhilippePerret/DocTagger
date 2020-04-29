@@ -21,6 +21,9 @@ class Mot {
   }
   static mouseUpOn(mot){
     this.motOff = mot
+    if ( this.motOn && this.motOn.newState ) {
+      FormComment.open()
+    }
     this.motOn = null
   }
 
