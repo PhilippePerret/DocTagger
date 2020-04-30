@@ -63,6 +63,7 @@ class ChromeReadFile {
     this.choose       = this.choose.bind(this)
     this.onChoosed    = this.onChoosed.bind(this)
     this.onLoaded     = this.onLoaded.bind(this)
+    this.readContent  = this.readContent.bind(this)
   }
 
   read(){
@@ -90,6 +91,10 @@ class ChromeReadFile {
   /** Méthode appelée quand on a choisi le fichier à ouvrir **/
   onChoosed(entry){
     this.retain(entry)
+    this.readContent(entry)
+  }
+
+  readContent(entry){
     entry.file((file) => {
       var reader = new FileReader();
       reader.onerror = this.errorHandler;
@@ -104,7 +109,16 @@ class ChromeReadFile {
   }
 
   retain(entry){
+    this.entry = entry
     this.retainedId = chrome.fileSystem.retainEntry(entry)
+  }
+
+  restore(retainedId){
+    return new Promise((ok,ko)=>{
+      this.resolveFunction = ok
+      this.retainedId = retainedId
+      chrome.fileSystem.restoreEntry(retainedId, this.readContent)
+    })
   }
 
 

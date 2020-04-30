@@ -1,7 +1,7 @@
 class UI {
   static init(){
     this.ButtonOpen = document.querySelector('#btn-open')
-    this.ButtonRefreshUI = document.querySeletor('#btn-refresh-ui')
+    this.ButtonRefreshUI = document.querySelector('#btn-refresh-ui')
     this.observe()
     this.refresh()
   }
