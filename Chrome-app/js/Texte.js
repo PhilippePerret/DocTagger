@@ -13,19 +13,13 @@ class Texte {
   /**
     Méthode appelée par le bouton "Ouvrir…" pour choisir un texte et l'ouvrir
   **/
-  static async chooseFileAndOpen(){
+  static chooseFileAndOpen(){
     const cfile = new ChromeReadFile({message:"Fichier texte :", extensions:['txt','md']})
-    const content = await cfile.read()
-    this.defineTexte(content)
-    // On peut mémoriser dans le local storage la variable pour le charger
-    // plus tard.
-    chrome.storage.local.set({'current_texte': cfile.retainedId}, ()=>{
-      console.log("Fichier texte mémorisé pour chargement ultérieur.")
-    })
-    // await
-    // let fileHandle;
-    // chooseFileToOpen(this.openFileChoosed.bind(this)) // dans io.js pour le moment
+    cfile.read()
+    .then(this.defineTexte.bind(this))
+    .catch(err => console.error(err))
   }
+  // Chargement et préparation du texte +string+ (qui vient d'un fichier)
   static defineTexte(string){
     texte = new Texte('#document')
     texte.setContent(string)

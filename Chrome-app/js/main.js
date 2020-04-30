@@ -18,7 +18,6 @@ window.addEventListener("DOMContentLoaded", (event) => {
 
   // Récupérer le dernier fichier texte ouvert, si possible
   chrome.storage.local.get(['current_texte'], (result) => {
-
     // S'il y avait un texte précédemment enregistré, on le recharge
     // TODO Il faudrait voir d'abord si c'est possible (chrome.filesysteme.isRestorable?)
     if (result.current_texte){
