@@ -11,14 +11,26 @@ class Texte {
   }
 
   /**
-    Méthode appelée par le bouton "Ouvrir…" pour choisir un texte et l'ouvrir
+    Méthode appelée par le bouton "Ouvrir le texte…" pour choisir un texte et l'ouvrir
   **/
-  static chooseFileAndOpen(){
+  static chooseFileAndOpen(callback){
     const cfile = new ChromeReadFile({message:"Fichier texte :", extensions:['txt','md']})
     cfile.read()
     .then(this.defineTexte.bind(this))
     .catch(err => console.error(err))
   }
+  /**
+    Méthode appelée par le bouton "Ouvrir Texte et Commentaires…"
+  **/
+  static async chooseFileAndCommentsToOpen() {
+    const cfile = new ChromeReadFile({message:"Fichier texte :", extensions:['txt','md']})
+    var content = await cfile.read()
+    this.defineTexte(content)
+    const cfileComs = new ChromeReadFile({message:"Fichier commentaires", extensions:['txtcoms']})
+    var coms = await cfile.read()
+    Comment.displayComments(coms)
+  }
+
   // Chargement et préparation du texte +string+ (qui vient d'un fichier)
   static defineTexte(string){
     texte = new Texte('#document')

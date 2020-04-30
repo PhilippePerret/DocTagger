@@ -1,13 +1,17 @@
 class UI {
   static init(){
     this.ButtonOpen = document.querySelector('#btn-open')
+    this.ButtonOpenTextNComs = document.querySelector('#btn-open-coms')
+    this.ButtonSave = document.querySelector('#btn-save')
     this.ButtonRefreshUI = document.querySelector('#btn-refresh-ui')
     this.observe()
     this.refresh()
   }
   static observe(){
     this.ButtonOpen.addEventListener('click',Texte.chooseFileAndOpen.bind(Texte))
+    this.ButtonOpenTextNComs.addEventListener('click', Texte.chooseFileAndCommentsToOpen.bind(Texte))
     this.ButtonRefreshUI.addEventListener('click', this.refresh.bind(this))
+    this.ButtonSave.addEventListener('click', Comment.saveAll.bind(Comment))
   }
 
   /**

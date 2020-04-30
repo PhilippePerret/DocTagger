@@ -10,26 +10,113 @@ const COMMENT_TYPES = {
 class Comment {
   static init(){
     this.lastId = 0
+    this.saveAll    = this.saveAll.bind(this)
+    this.doSaveAll  = this.doSaveAll.bind(this)
+    this.chooseAWritableFile = this.chooseAWritableFile.bind(this)
   }
   static newId(){
     ++ this.lastId ;
     return this.lastId ;
   }
 
+  /**
+    Méthode pour enregistrer tous les commentaires dans un fichier
+    Si le fichier n'est pas encore déterminé, on le choisit.
+  **/
+  static saveAll(){
+    chrome.storage.local.get(['current_coms'], result => {
+      if ( result.current_coms ) {
+        chrome.fileSystem.isRestorable(result.current_coms, isRestorable => {
+          if (isRestorable) { this.doSaveAll() }
+          else { this.chooseAWritableFile(this.doSaveAll) }
+        })
+      } else { this.chooseAWritableFile(this.doSaveAll) }
+    })
+  }
+  /**
+    Le fichier à enregistrer est défini, on peut procéder à l'enregistrement
+  **/
+  static doSaveAll(dirEntry){
+    dirEntry.getFile('comments.txtcoms', {create: true}, async (entry) => {
+      console.log("-> getFile")
+      var allComments = await this.DBgetAll()
+      console.log("allComments = ", allComments)
+      // Create a FileWriter object for our FileEntry (log.txt).
+       entry.createWriter(function(fileWriter) {
+         fileWriter.onwriteend = function(e) {
+           console.info('Enregistrement terminé');
+         };
+         fileWriter.onerror = console.error
+         var blob = new Blob([JSON.stringify(allComments)], {type: 'text/plain'});
+         fileWriter.write(blob);
+       }, console.error)
+    }, console.error)
+  }
+
+  /**
+    Méthode pour choisir où enregistrer les commentaires
+  **/
+  static chooseAWritableFile(callback){
+    chooseFolder(callback)
+  }
+
+  /**
+    Méthode qui renvoie tous les enregistrements
+  **/
+  static DBgetAll(){
+    return new Promise((ok,ko) => {
+      var dbmethod = function(os){
+        var rq = os.getAll()
+        rq.onsuccess = e => {
+          console.info(e.target.result)
+          console.info("Récupération de tous les commentaires")
+          ok(e.target.result)
+        }
+        rq.onerror = console.error
+      }
+      this.dbrequest(dbmethod)
+    })
+  }
+  /**
+    Méthode qui permet d'effacer complètement la base de données
+  **/
+  static DBclear(){
+    var dbmethod = function(os){
+      var rq = os.clear()
+      rq.onsuccess = e => {
+        console.info(e.target.result)
+        console.info("Base de donnée vidée avec succès.")
+        if ( callback ) callback()
+      }
+      rq.onerror = console.error
+    }
+    this.dbrequest(dbmethod)
+  }
+
+  /**
+    Méthode pour enregistrer dans indexedDB le commentaire
+  **/
   static store(comment, callback){
-    var con = indexedDB.open('comments', 1);
-    con.onsuccess = e => {
-      var db = e.target.result
-      var tr = db.transaction(['comments'], 'readwrite')
-      var os = tr.objectStore('comments')
-      console.log("objectStore:",os)
-      var rq = os.add(comment, 'id')
+    var dbmethod = function(os){
+      var rq = os.add(comment, comment.id)
       rq.onsuccess = e => {
         console.info(e.target.result)
         console.info("Commentaire enregistré :", comment)
         if ( callback ) callback()
       }
       rq.onerror = console.error
+    }
+    this.dbrequest(dbmethod, callback)
+  }
+
+  static dbrequest(dbMethod, callback){
+    var con = indexedDB.open('comments', 1);
+    con.onsuccess = e => {
+      var db = e.target.result
+      var tr = db.transaction(['comments'], 'readwrite')
+      var os = tr.objectStore('comments')
+      console.log("objectStore:",os)
+      dbMethod(os)
     }
     con.onerror = e => {console.error(e.target.result)}
     //On upgrade needed.
