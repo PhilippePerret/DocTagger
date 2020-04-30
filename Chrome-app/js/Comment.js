@@ -16,6 +16,33 @@ class Comment {
     return this.lastId ;
   }
 
+  static store(comment, callback){
+    var con = indexedDB.open('comments', 1);
+    con.onsuccess = e => {
+      var db = e.target.result
+      var tr = db.transaction(['comments'], 'readwrite')
+      var os = tr.objectStore('comments')
+      console.log("objectStore:",os)
+      var rq = os.add(comment, 'id')
+      rq.onsuccess = e => {
+        console.info(e.target.result)
+        console.info("Commentaire enregistré :", comment)
+        if ( callback ) callback()
+      }
+      rq.onerror = console.error
+    }
+    con.onerror = e => {console.error(e.target.result)}
+    //On upgrade needed.
+    con.onupgradeneeded = e => {
+      var db = e.target.result;
+      console.log('Run onupgradeneeded');
+      if (!db.objectStoreNames.contains("comments") ) {
+        db.createObjectStore("comments", { keypath: "id"});
+      }
+    }
+  }
+
+
   /** ---------------------------------------------------------------------
     *
     INSTANCE
@@ -35,10 +62,8 @@ class Comment {
   }
 
   save(){
-    if ( undefined === this.folder ) {
-      return this.chooseCommentsFolder(this.save.bind(this))
-    }
     console.log("Je vais sauver", this.data)
+    this.constructor.store.call(this.constructor, this.data)
   }
 
   /**
