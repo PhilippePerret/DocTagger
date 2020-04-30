@@ -1,12 +1,14 @@
 class UI {
   static init(){
-    this.ButtonOpen = document.querySelector('#btn-open')
-    this.ButtonOpenTextNComs = document.querySelector('#btn-open-coms')
-    this.ButtonSave       = DGet('#btn-save')
-    this.ButtonRefreshUI  = DGet('#btn-refresh-ui')
-    this.FieldAuthor      = DGet('#comment-author-name')
-    this.FieldAuthorDim   = DGet('#comment-author-dim')
-    this.ButtonDeselectAllMots = DGet('#btn-deselect')
+    this.ButtonOpen           = DGet('#btn-open')
+    this.ButtonOpenTextNComs  = DGet('#btn-open-coms')
+    this.ButtonSave           = DGet('#btn-save')
+    this.ButtonRefreshUI      = DGet('#btn-refresh-ui')
+    this.FieldAuthor          = DGet('#comment-author-name')
+    this.FieldAuthorDim       = DGet('#comment-author-dim')
+    this.ButtonDeselectAllMots= DGet('#btn-deselect')
+
+    this.divComments          = DGet('#comments')
     this.observe()
     this.refresh()
   }
@@ -18,7 +20,7 @@ class UI {
       [this.ButtonSave, 'click', Comment.saveAll.bind(Comment)],
       [this.ButtonDeselectAllMots, 'click', Mot.deselectAll.bind(Mot)]
     ].forEach( devent => {
-      var obj, typeE, method = devent
+      var [obj, typeE, method] = devent
       obj.addEventListener(typeE, method)
     })
   }

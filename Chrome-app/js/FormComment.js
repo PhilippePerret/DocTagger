@@ -27,6 +27,7 @@ class FormComment {
   static prepare(){
     this.hiddenId = this.obj.querySelector('#comment-id')
     this.textareaContent = DGet('#comment-content')
+    this.menuColors = this.obj.querySelector('#comment-color')
     this.menuTypes = this.obj.querySelector('#comment-type')
     this.menuTypes.innerHTML = ''
     for( var typ in COMMENT_TYPES) {
@@ -45,7 +46,7 @@ class FormComment {
     if ( Mot.selections.length == 0) {
       return error("Il faut sélectionner le texte à commenter !")
     }
-    const comment = new Comment(Mot.selections, this.getData())
+    const comment = new Comment(this.getData(), Mot.selections)
     comment.save()
     this.close()
   }
@@ -59,6 +60,7 @@ class FormComment {
       , type: this.menuTypes.value
       , content: this.textareaContent.value
       , intensity: this.menuIntensity.value
+      , color: this.menuColors.value
       , author: UI.FieldAuthorDim.value // hors du formulaire
     }
   }

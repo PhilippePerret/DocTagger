@@ -1,0 +1,8 @@
+.com {
+  position: absolute;
+  font-size: 8.2pt;
+  background-color:1px solid;
+}
+.com:hover {
+  opacity:1 !important;
+}

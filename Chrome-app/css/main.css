@@ -5,7 +5,7 @@ body {
 
 section#content {
   display:grid;
-  grid-template-columns: 11cm 0.5cm 7.5cm;
+  grid-template-columns: calc(60% - 20px) 20px 40%;
   grid-template-rows: auto;
   font-size:13pt;
   zoom:160%;

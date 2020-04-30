@@ -31,6 +31,8 @@ class Comment {
     allcomments.forEach( dcomment => {
       if ( dcomment.id > this.lastId ) { this.lastId = Number(dcomment.id) }
       // TODO ÉCRIRE LE COMMENTAIRE
+      var comment = new Comment(dcomment)
+      comment.display()
     })
   }
 
@@ -162,9 +164,15 @@ class Comment {
     INSTANCE
     *
   *** --------------------------------------------------------------------- */
-  constructor(mots, data_comment){
+  constructor(data_comment, mots){
     this.data = data_comment;
-    Object.assign(this.data, {mots: mots.map(mot => mot.id)})
+    if (undefined !== mots && undefined === this.data.mots){
+      // Par exemple à la création
+      Object.assign(this.data, {mots: mots.map(mot => mot.id)})
+    } else {
+      // Par exemple à l'instanciation d'un commentaire existant
+      mots = this.data.mots.map( motId => Mot.get(motId))
+    }
     this.mots = mots
 
     if (this.data.id == ''){
@@ -175,9 +183,40 @@ class Comment {
     }
   }
 
+  /**
+    Affichage du commentaire
+
+    Pour le moment, on le met à la hauteur du mot le plus haut, mais ensuite
+    il faudra faire un affiche beaucoup plus fin.
+  **/
+  display(){
+    // IL faut le détruire s'il existe
+    var comObj = DGet(`com${this.data.id}`);
+    if ( comObj ) comObj.remove()
+    // Obtenir sa hauteur
+    var top = 100000
+    this.mots.forEach(mot => {
+      console.log("mot ", mot, mot.top)
+      if ( top > mot.top ) top = Number(mot.top)
+    })
+    var color = this.data.color || 'blue'
+    // Fabriquer le div du commentaire
+    comObj = document.createElement('DIV')
+    comObj.className = 'com'
+    comObj.id = `com${this.data.id}`
+    comObj.innerHTML = this.data.content
+    comObj.setAttribute('style', `top:${top}px;color:${color};opacity:0.${this.data.intensity};`)
+    // Peindre les mots du commentaire
+    this.mots.forEach(mot => mot.setColor(color))
+    // Poser un observateur sur le commentaire (OU mettre des boutons
+    // pour l'éditer)
+    UI.divComments.appendChild(comObj)
+  }
+
   save(){
     console.log("Je vais sauver", this.data)
     this.constructor.store.call(this.constructor, this.data)
+    this.display()
   }
 
   // /**

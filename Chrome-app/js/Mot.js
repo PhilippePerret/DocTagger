@@ -82,6 +82,16 @@ class Mot {
     this.toggleState()
   }
 
+  /**
+    Quand le mot fait partie d'un commentaire, on le colorise
+  **/
+  setColor(color){
+    this.obj.style.backgroundColor = color
+  }
+
+  get top(){
+    return this._top || (this._top = this.obj.offsetTop)
+  }
   get obj(){
     return this._obj || (this._obj = DGet(`#${this.domId}`))
   }
