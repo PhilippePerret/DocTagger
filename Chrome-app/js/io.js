@@ -1,18 +1,28 @@
+'use strict';
 
 // const lastPath = chrome.storage.local.get("last-path")
 // console.log("lastPath", lastPath)
 
+function saveInFile(filename, content, dirEntry){
+  dirEntry.getFile(
+    filename,
+    {create: true}, // add "exclusive: true" to prevent overwrite
+    function(fileEntry) {
+      /* write here */
+    },
+    function(e) { console.error(e) }
+  )
+}
+
 function errorHandler(err){
   console.error(err)
 }
-function onChoosedFileToOpen(ret, callback){
-  console.log("-> onChoosedFileToOpen: ", ret)
-
-  const file = ret.file(function(file){
+function onChoosedFileToOpen(entry, callback){
+  var rentry = chrome.fileSystem.retainEntry(entry)
+  const file = entry.file(function(file){
     var reader = new FileReader();
     reader.onerror = errorHandler;
     reader.onloadend = function(e) {
-      console.log("TEXTE:",e.target.result);
       callback(e.target.result)
     };
     // On demande la lecture du fichier
@@ -22,7 +32,14 @@ function onChoosedFileToOpen(ret, callback){
 
 }
 
-
+function chooseFolder(callback){
+  chrome.fileSystem.chooseEntry({
+      type: 'openDirectory'
+    , accepts: [
+        {description: "Dossier pour mettre les commentaires :"}
+      ]
+  }, callback)
+}
 
 function chooseFile(callback){
   chrome.fileSystem.chooseEntry( {
@@ -80,4 +97,15 @@ function loadInitialFile(launchData) {
       }
     });
   }
+}
+
+
+
+
+function storeAndRetain(){
+  dirEntryId = chrome.fileSystem.retainEntry(dirEntry);
+
+// Use chrome.storage to save/retrieve it
+
+chrome.fileSystem.restoreEntry(dirEntryId, function(entry) { /* ... */ });
 }

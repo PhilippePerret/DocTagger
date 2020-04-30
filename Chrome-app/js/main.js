@@ -14,6 +14,17 @@ window.addEventListener("DOMContentLoaded", (event) => {
   Texte.init()
   FormComment.init()
   Comment.init()
-  loadInitialFile(launchData)
+  // loadInitialFile(launchData)
+
+  // Récupérer le dernier fichier texte ouvert, si possible
+  chrome.storage.local.get(['current_texte'], (result) => {
+    if (result.current_texte){
+      console.log("Il y a un fichier mémorisé")
+    } else {
+      console.log("Aucun fichier texte n'est mémorisé.")
+    }
+  })
+
+
   // loadInitialFile()
 });

@@ -35,6 +35,23 @@ class Comment {
   }
 
   save(){
+    if ( undefined === this.folder ) {
+      return this.chooseCommentsFolder(this.save.bind(this))
+    }
     console.log("Je vais sauver", this.data)
   }
+
+  /**
+    Méthode permettant de choisir un dossier dans lequel mettre les commentaires
+  **/
+  chooseCommentsFolder(callback){
+    chooseFolder(this.onChooseFolder.bind(this, callback))
+  }
+  onChooseFolder(callback, entry){
+    console.log("entry:", entry)
+    console.log("callback", callback)
+    console.log("Je m'arrête dans onChooseFolder")
+    // callback()
+  }
+
 }
