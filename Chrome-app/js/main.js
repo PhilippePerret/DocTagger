@@ -31,4 +31,8 @@ window.addEventListener("DOMContentLoaded", (event) => {
   // })
   //
   // loadInitialFile()
+
+  // TODO Après, il faudra le mettre après la lecture du texte
+  Comment.displayAllComments();
+
 });

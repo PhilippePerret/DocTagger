@@ -14,9 +14,24 @@ class Comment {
     this.doSaveAll  = this.doSaveAll.bind(this)
     this.chooseAWritableFile = this.chooseAWritableFile.bind(this)
   }
+
   static newId(){
     ++ this.lastId ;
     return this.lastId ;
+  }
+
+  /**
+    Récupère le dernier identifiant
+    Note : pour le moment, comme je suis encore assez "fragile", je récupère
+    tout et je regarde le dernier ID enregistré.
+  **/
+  static async displayAllComments(){
+    var allcomments = await this.DBgetAll()
+    // console.log("Tous les commentaires :", allcomments)
+    allcomments.forEach( dcomment => {
+      if ( dcomment.id > this.lastId ) { this.lastId = Number(dcomment.id) }
+      // TODO ÉCRIRE LE COMMENTAIRE
+    })
   }
 
   /**
@@ -24,11 +39,13 @@ class Comment {
     Si le fichier n'est pas encore déterminé, on le choisit.
   **/
   static saveAll(){
-    chrome.storage.local.get(['current_coms'], result => {
-      if ( result.current_coms ) {
-        chrome.fileSystem.isRestorable(result.current_coms, isRestorable => {
-          if (isRestorable) { this.doSaveAll() }
-          else { this.chooseAWritableFile(this.doSaveAll) }
+    chrome.storage.local.get(['folder_comments'], result => {
+      if ( result.folder_comments ) {
+        chrome.fileSystem.isRestorable(result.folder_comments, isRestorable => {
+          if (isRestorable) {
+            console.log("Commentaires enregistrés dans dossier retenu")
+            chrome.fileSystem.restoreEntry(result.folder_comments, this.doSaveAll)
+          } else { this.chooseAWritableFile(this.doSaveAll) }
         })
       } else { this.chooseAWritableFile(this.doSaveAll) }
     })
@@ -56,8 +73,13 @@ class Comment {
   /**
     Méthode pour choisir où enregistrer les commentaires
   **/
-  static chooseAWritableFile(callback){
-    chooseFolder(callback)
+  static async chooseAWritableFile(callback){
+    var folderEntry = await chooseFolder()
+    var retainedFolderId = chrome.fileSystem.retainEntry(folderEntry)
+    chrome.storage.local.set({'folder_comments': retainedFolderId}, e => {
+      console.info("Dossier commentaires retenu.")
+    })
+    callback(folderEntry)
   }
 
   /**

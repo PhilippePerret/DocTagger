@@ -33,12 +33,14 @@ function onChoosedFileToOpen(entry, callback){
 }
 
 function chooseFolder(callback){
-  chrome.fileSystem.chooseEntry({
-      type: 'openDirectory'
-    , accepts: [
-        {description: "Dossier pour mettre les commentaires :"}
-      ]
-  }, callback)
+  return new Promise((ok,ko)=>{
+    chrome.fileSystem.chooseEntry({
+        type: 'openDirectory'
+      , accepts: [
+          {description: "Dossier pour mettre les commentaires :"}
+        ]
+    }, ok)
+  })
 }
 
 function chooseFile(callback){
