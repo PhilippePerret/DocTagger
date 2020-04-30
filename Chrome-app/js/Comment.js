@@ -64,7 +64,12 @@ class Comment {
            console.info('Enregistrement terminé');
          };
          fileWriter.onerror = console.error
-         var blob = new Blob([JSON.stringify(allComments)], {type: 'text/plain'});
+         var alldata = {
+           author: {patronyme: UI.FieldAuthor.value, diminutif: UI.FieldAuthorDim.value},
+           comments: allComments,
+           date: null // la régler plus tard
+         }
+         var blob = new Blob([JSON.stringify(alldata)], {type: 'text/plain'});
          fileWriter.write(blob);
        }, console.error)
     }, console.error)
@@ -175,17 +180,17 @@ class Comment {
     this.constructor.store.call(this.constructor, this.data)
   }
 
-  /**
-    Méthode permettant de choisir un dossier dans lequel mettre les commentaires
-  **/
-  chooseCommentsFolder(callback){
-    chooseFolder(this.onChooseFolder.bind(this, callback))
-  }
-  onChooseFolder(callback, entry){
-    console.log("entry:", entry)
-    console.log("callback", callback)
-    console.log("Je m'arrête dans onChooseFolder")
-    // callback()
-  }
+  // /**
+  //   Méthode permettant de choisir un dossier dans lequel mettre les commentaires
+  // **/
+  // chooseCommentsFolder(callback){
+  //   chooseFolder(this.onChooseFolder.bind(this, callback))
+  // }
+  // onChooseFolder(callback, entry){
+  //   console.log("entry:", entry)
+  //   console.log("callback", callback)
+  //   console.log("Je m'arrête dans onChooseFolder")
+  //   // callback()
+  // }
 
 }

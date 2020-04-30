@@ -38,3 +38,16 @@ section#tools {
   background-color:grey;
   text-align:right;
 }
+
+
+fieldset#fs-author {
+  display:inline-block;
+  padding: 0 10px 10px 10px;
+  text-align:left;
+  margin-right:1em;
+}
+fieldset#fs-author legend {
+  color:white;
+  font-size:9pt;
+  font-style:italic;
+}

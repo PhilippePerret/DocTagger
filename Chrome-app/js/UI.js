@@ -2,16 +2,25 @@ class UI {
   static init(){
     this.ButtonOpen = document.querySelector('#btn-open')
     this.ButtonOpenTextNComs = document.querySelector('#btn-open-coms')
-    this.ButtonSave = document.querySelector('#btn-save')
-    this.ButtonRefreshUI = document.querySelector('#btn-refresh-ui')
+    this.ButtonSave       = DGet('#btn-save')
+    this.ButtonRefreshUI  = DGet('#btn-refresh-ui')
+    this.FieldAuthor      = DGet('#comment-author-name')
+    this.FieldAuthorDim   = DGet('#comment-author-dim')
+    this.ButtonDeselectAllMots = DGet('#btn-deselect')
     this.observe()
     this.refresh()
   }
   static observe(){
-    this.ButtonOpen.addEventListener('click',Texte.chooseFileAndOpen.bind(Texte))
-    this.ButtonOpenTextNComs.addEventListener('click', Texte.chooseFileAndCommentsToOpen.bind(Texte))
-    this.ButtonRefreshUI.addEventListener('click', this.refresh.bind(this))
-    this.ButtonSave.addEventListener('click', Comment.saveAll.bind(Comment))
+    [
+      [this.ButtonOpen, 'click', Texte.chooseFileAndOpen.bind(Texte)],
+      [this.ButtonOpenTextNComs,'click',Texte.chooseFileAndCommentsToOpen.bind(Texte)],
+      [this.ButtonRefreshUI, 'click', this.refresh.bind(this)],
+      [this.ButtonSave, 'click', Comment.saveAll.bind(Comment)],
+      [this.ButtonDeselectAllMots, 'click', Mot.deselectAll.bind(Mot)]
+    ].forEach( devent => {
+      var obj, typeE, method = devent
+      obj.addEventListener(typeE, method)
+    })
   }
 
   /**

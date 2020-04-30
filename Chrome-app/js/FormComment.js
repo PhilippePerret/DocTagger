@@ -15,6 +15,10 @@ class FormComment {
   static close(){
     this.obj.classList.add('closed')
     this.obj.classList.remove('opened')
+    // On réinitialise tout pour éviter tout doublon
+    this.textareaContent.value = ''
+    this.hiddenId.value = ''
+    Mot.deselectAll.call(Mot)
   }
   static init(){
     this.obj = DGet('#form-comment')
@@ -55,7 +59,7 @@ class FormComment {
       , type: this.menuTypes.value
       , content: this.textareaContent.value
       , intensity: this.menuIntensity.value
-      , author: DGet('#comment-auteur').value // hors du formulaire
+      , author: UI.FieldAuthorDim.value // hors du formulaire
     }
   }
 }

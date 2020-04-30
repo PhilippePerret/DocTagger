@@ -6,8 +6,6 @@ class Texte {
   static init(){
     texte = new Texte('#document')
     texte.traite();
-    // On observe les boutons
-    DGet('#btn-deselect').addEventListener('click', Mot.deselectAll.bind(Mot))
   }
 
   /**

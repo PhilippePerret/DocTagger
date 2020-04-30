@@ -6,7 +6,7 @@ chrome.app.runtime.onLaunched.addListener(function(launchData) {
   chrome.app.window.create('index.htm', {
     'id': "doctagger-window",
     'bounds': {
-      'width': 1400,
+      'width': 1600,
       'height': 400
     }
   }, function(win){
