@@ -9,15 +9,23 @@ const COMMENT_TYPES = {
 }
 class Comment {
   static init(){
-    this.lastId = 0
     this.saveAll    = this.saveAll.bind(this)
-    this.doSaveAll  = this.doSaveAll.bind(this)
-    this.chooseAWritableFile = this.chooseAWritableFile.bind(this)
+    this.reset()
+  }
+
+  static reset(){
+    this.lastId = 0
   }
 
   static newId(){
     ++ this.lastId ;
     return this.lastId ;
+  }
+
+  static async load(commentsFile){
+    this.reset()
+    await this.DBclear()
+
   }
 
   /**
@@ -30,7 +38,6 @@ class Comment {
     // console.log("Tous les commentaires :", allcomments)
     allcomments.forEach( dcomment => {
       if ( dcomment.id > this.lastId ) { this.lastId = Number(dcomment.id) }
-      // TODO ÉCRIRE LE COMMENTAIRE
       var comment = new Comment(dcomment)
       comment.display()
     })
@@ -40,53 +47,26 @@ class Comment {
     Méthode pour enregistrer tous les commentaires dans un fichier
     Si le fichier n'est pas encore déterminé, on le choisit.
   **/
-  static saveAll(){
-    chrome.storage.local.get(['folder_comments'], result => {
-      if ( result.folder_comments ) {
-        chrome.fileSystem.isRestorable(result.folder_comments, isRestorable => {
-          if (isRestorable) {
-            console.log("Commentaires enregistrés dans dossier retenu")
-            chrome.fileSystem.restoreEntry(result.folder_comments, this.doSaveAll)
-          } else { this.chooseAWritableFile(this.doSaveAll) }
-        })
-      } else { this.chooseAWritableFile(this.doSaveAll) }
-    })
-  }
-  /**
-    Le fichier à enregistrer est défini, on peut procéder à l'enregistrement
-  **/
-  static doSaveAll(dirEntry){
-    dirEntry.getFile('comments.txtcoms', {create: true}, async (entry) => {
-      console.log("-> getFile")
-      var allComments = await this.DBgetAll()
-      console.log("allComments = ", allComments)
-      // Create a FileWriter object for our FileEntry (log.txt).
-       entry.createWriter(function(fileWriter) {
-         fileWriter.onwriteend = function(e) {
-           console.info('Enregistrement terminé');
-         };
-         fileWriter.onerror = console.error
-         var alldata = {
-           author: {patronyme: UI.FieldAuthor.value, diminutif: UI.FieldAuthorDim.value},
-           comments: allComments,
-           date: null // la régler plus tard
-         }
-         var blob = new Blob([JSON.stringify(alldata)], {type: 'text/plain'});
-         fileWriter.write(blob);
-       }, console.error)
+  static async saveAll(){
+    let chooser = new ChooserTexte()
+    let commentsFile = await chooser.restoreCommentsEntry()
+    console.log("[saveAll] commentsFile:", commentsFile)
+    var allComments = await this.DBgetAll()
+    console.log("allComments = ", allComments)
+    // Créer un writer pour le fichier commentaires
+    commentsFile.createWriter(function(fileWriter) {
+      fileWriter.onwriteend = function(e) {
+        console.info('Enregistrement terminé');
+      };
+      fileWriter.onerror = console.error
+      var alldata = {
+        author: {patronyme: UI.FieldAuthor.value, diminutif: UI.FieldAuthorDim.value},
+        comments: allComments,
+        date: null // la régler plus tard
+      }
+      var blob = new Blob([JSON.stringify(alldata)], {type: 'text/plain'});
+      fileWriter.write(blob);
     }, console.error)
-  }
-
-  /**
-    Méthode pour choisir où enregistrer les commentaires
-  **/
-  static async chooseAWritableFile(callback){
-    var folderEntry = await chooseFolder()
-    var retainedFolderId = chrome.fileSystem.retainEntry(folderEntry)
-    chrome.storage.local.set({'folder_comments': retainedFolderId}, e => {
-      console.info("Dossier commentaires retenu.")
-    })
-    callback(folderEntry)
   }
 
   /**
@@ -112,7 +92,7 @@ class Comment {
   static DBclear(){
     var dbmethod = function(os){
       var rq = os.clear()
-      rq.onsuccess = e => {
+      rq.oncomplete = e => {
         console.info(e.target.result)
         console.info("Base de donnée vidée avec succès.")
         if ( callback ) callback()
@@ -218,18 +198,5 @@ class Comment {
     this.constructor.store.call(this.constructor, this.data)
     this.display()
   }
-
-  // /**
-  //   Méthode permettant de choisir un dossier dans lequel mettre les commentaires
-  // **/
-  // chooseCommentsFolder(callback){
-  //   chooseFolder(this.onChooseFolder.bind(this, callback))
-  // }
-  // onChooseFolder(callback, entry){
-  //   console.log("entry:", entry)
-  //   console.log("callback", callback)
-  //   console.log("Je m'arrête dans onChooseFolder")
-  //   // callback()
-  // }
-
+  
 }

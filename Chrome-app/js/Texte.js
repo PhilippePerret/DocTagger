@@ -8,25 +8,30 @@ class Texte {
     texte.traite();
   }
 
-  /**
-    Méthode appelée par le bouton "Ouvrir le texte…" pour choisir un texte et l'ouvrir
-  **/
-  static chooseFileAndOpen(callback){
-    const cfile = new ChromeReadFile({message:"Fichier texte :", extensions:['txt','md']})
-    cfile.read()
-    .then(this.defineTexte.bind(this))
-    .catch(err => console.error(err))
+  static async retrieveLastIfExists(){
+    // On essaie de lire le fichier courant
+    var [texteFile, commentsFile] = await ChooserTexte.retrieveLastTexte()
+    // console.log("texteFile: ", texteFile)
+    // console.log("commentsFile: ", commentsFile)
+    if ( texteFile ) {
+      this.load(texteFile, commentsFile)
+    } else {
+      // Si aucun texte courant, on indique l'aide pour choisir un
+      // texte à commenter.
+      UI.divDocument.innerHTML = "<H3>Aide pour Doc-Tagger [à développer]</H3>"
+    }
   }
-  /**
-    Méthode appelée par le bouton "Ouvrir Texte et Commentaires…"
-  **/
-  static async chooseFileAndCommentsToOpen() {
-    const cfile = new ChromeReadFile({message:"Fichier texte :", extensions:['txt','md']})
-    var content = await cfile.read()
-    this.defineTexte(content)
-    const cfileComs = new ChromeReadFile({message:"Fichier commentaires", extensions:['txtcoms']})
-    var coms = await cfile.read()
-    Comment.displayComments(coms)
+
+  static load(texteFile, commentsFile){
+    // On écrit le texte dans la page
+    const file_reader = new FileReader();
+    file_reader.onload = e => {
+      console.log("e.target.result (dans load)", e.target.result)
+      this.defineTexte(e.target.result)
+      if (commentsFile) { Comment.load(commentsFile) }
+    }
+    // file_reader.readAsArrayBuffer(texteFile/* peut-être .file() */);
+    file_reader.readAsText(texteFile/* peut-être .file() */);
   }
 
   // Chargement et préparation du texte +string+ (qui vient d'un fichier)
@@ -35,10 +40,7 @@ class Texte {
     texte.setContent(string)
     texte.traite()
   }
-  static openFileChoosed(ret){
-    console.log("-> openFileChoosed")
-    onChoosedFileToOpen(ret, this.defineTexte.bind(this))
-  }
+
   // ---------------------------------------------------------------------
   constructor(conteneur){
     this.container = DGet(conteneur)
@@ -66,5 +68,8 @@ class Texte {
       mot.observe()
     }
     console.log("Texte préparé.")
+
+    // Affichage de ses commentaires
+    Comment.displayAllComments();
   }
 }
