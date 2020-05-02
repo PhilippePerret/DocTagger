@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Doc Tagger</title>
+  </head>
+  <link rel="stylesheet" href="system/css/common.css" id="stylesheet_system_css_common" />
+<link rel="stylesheet" href="system/css/Dialog.css" id="stylesheet_system_css_Dialog" />
+<link rel="stylesheet" href="system/css/Flash.css" id="stylesheet_system_css_Flash" />
+<link rel="stylesheet" href="system/css/form.css" id="stylesheet_system_css_form" />
+<link rel="stylesheet" href="system/css/MessageBox.css" id="stylesheet_system_css_MessageBox" />
+<link rel="stylesheet" href="system/css/MiniAide.css" id="stylesheet_system_css_MiniAide" />
+<link rel="stylesheet" href="system/css/PConfig.css" id="stylesheet_system_css_PConfig" />
+<link rel="stylesheet" href="system/css/ui.css" id="stylesheet_system_css_ui" />
+<link rel="stylesheet" href="app/css/comments.css" id="stylesheet_app_css_comments" />
+<link rel="stylesheet" href="app/css/common.css" id="stylesheet_app_css_common" />
+<link rel="stylesheet" href="app/css/form_comment.css" id="stylesheet_app_css_form_comment" />
+<link rel="stylesheet" href="app/css/main.css" id="stylesheet_app_css_main" />
+<link rel="stylesheet" href="app/css/mot.css" id="stylesheet_app_css_mot" />
+<body>
+
+<section id="content">
+  <div id="document">
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+  </div>
+
+  <div id="comments">
+  </div>
+</section>
+
+<section id="tools">
+  <button type="button" id="btn-sandbox">ESSAYER… (sandbox)</button>
+  <button type="button" id="btn-refresh-ui">Rafraichir UI</button>
+  <input type="button" id="btn-open" value="Ouvrir le texte…">
+  <input type="button" id="btn-save" value="Enregistrer dans…">
+  <button id="btn-deselect" type="button" class="small">Déselectionner</button>
+  <fieldset id="fs-author">
+    <legend>Auteur</legend>
+    <input type="text" id="comment-author-name" value="Philippe perret" placeholder="Votre nom">
+    <input type="text" id="comment-author-dim" value="PP" placeholder="Vos initiales">
+  </fieldset>
+</section>
+
+
+<!--
+  FORMULAIRE D'ÉDITION/CRÉATION DE COMMENTAIRE
+ -->
+<div id="form-comment" class="form closed">
+  <input type="hidden" id="comment-id" name="comment-id" value="">
+  <div class="row">
+    <!-- Menu pour le type de commentaire -->
+    <span class="libelle">Type</span>
+    <select id="comment-type" name="comment-type"></select>
+    <!-- Menu pour la couleur -->
+    <span class="libelle">Couleur</span>
+    <select id="comment-color">
+      <option value="red">Rouge</option>
+      <option value="green">Vert</option>
+      <option value="blue">Bleu</option>
+      <option value="paleblue">Bleu pâle</option>
+      <option value="fushia">Fushia</option>
+      <option value="purple">Pourpre</option>
+    </select>
+    <!-- Menu pour l'intensité -->
+    <span class="libelle">Intensité</span>
+    <select id="comment-intensity" name="comment-intensity">
+      <option value="1">faible</option>
+      <option value="5">moyen</option>
+      <option value="9">fort</option>
+    </select>
+  </div>
+  <div class="row">
+    <textarea id="comment-content" name="comment-content"></textarea>
+  </div>
+  <div class="row buttons">
+    <button id="btn-save-comment" type="button" class="main">Enregistrer</button>
+  </div>
+  <div style="clear:both;"></div>
+</div>
+
+<script type="text/javascript" src="system/js/main.js"></script>
+<script type="text/javascript" src="system/js/first-required/__requires.js" id="stylesheet_system_js_first-required_requires"></script>
+<script type="text/javascript" src="system/js/first-required/aide.js" id="stylesheet_system_js_first-required_aide"></script>
+<script type="text/javascript" src="system/js/first-required/Calibre.js" id="stylesheet_system_js_first-required_Calibre"></script>
+<script type="text/javascript" src="system/js/first-required/Cancelisation.js" id="stylesheet_system_js_first-required_Cancelisation"></script>
+<script type="text/javascript" src="system/js/first-required/constants.js" id="stylesheet_system_js_first-required_constants"></script>
+<script type="text/javascript" src="system/js/first-required/Date.js" id="stylesheet_system_js_first-required_Date"></script>
+<script type="text/javascript" src="system/js/first-required/Debug.js" id="stylesheet_system_js_first-required_Debug"></script>
+<script type="text/javascript" src="system/js/first-required/Dialog.js" id="stylesheet_system_js_first-required_Dialog"></script>
+<script type="text/javascript" src="system/js/first-required/Dom_utils.js" id="stylesheet_system_js_first-required_Dom_utils"></script>
+<script type="text/javascript" src="system/js/first-required/FileFolder.js" id="stylesheet_system_js_first-required_FileFolder"></script>
+<script type="text/javascript" src="system/js/first-required/Flash.js" id="stylesheet_system_js_first-required_Flash"></script>
+<script type="text/javascript" src="system/js/first-required/handies_date.js" id="stylesheet_system_js_first-required_handies_date"></script>
+<script type="text/javascript" src="system/js/first-required/handies.js" id="stylesheet_system_js_first-required_handies"></script>
+<script type="text/javascript" src="system/js/first-required/IO.js" id="stylesheet_system_js_first-required_IO"></script>
+<script type="text/javascript" src="system/js/first-required/IOFile.js" id="stylesheet_system_js_first-required_IOFile"></script>
+<script type="text/javascript" src="system/js/first-required/Locales.js" id="stylesheet_system_js_first-required_Locales"></script>
+<script type="text/javascript" src="system/js/first-required/Log.js" id="stylesheet_system_js_first-required_Log"></script>
+<script type="text/javascript" src="system/js/first-required/Math.js" id="stylesheet_system_js_first-required_Math"></script>
+<script type="text/javascript" src="system/js/first-required/MessageBox.js" id="stylesheet_system_js_first-required_MessageBox"></script>
+<script type="text/javascript" src="system/js/first-required/MiniAide.js" id="stylesheet_system_js_first-required_MiniAide"></script>
+<script type="text/javascript" src="system/js/first-required/mysql.js" id="stylesheet_system_js_first-required_mysql"></script>
+<script type="text/javascript" src="system/js/first-required/PConfig.js" id="stylesheet_system_js_first-required_PConfig"></script>
+<script type="text/javascript" src="system/js/first-required/Preferences.js" id="stylesheet_system_js_first-required_Preferences"></script>
+<script type="text/javascript" src="system/js/first-required/Report.js" id="stylesheet_system_js_first-required_Report"></script>
+<script type="text/javascript" src="system/js/first-required/SmartDay.js" id="stylesheet_system_js_first-required_SmartDay"></script>
+<script type="text/javascript" src="system/js/first-required/String.js" id="stylesheet_system_js_first-required_String"></script>
+<script type="text/javascript" src="system/js/first-required/Text.js" id="stylesheet_system_js_first-required_Text"></script>
+<script type="text/javascript" src="system/js/first-required/UI.js" id="stylesheet_system_js_first-required_UI"></script>
+<script type="text/javascript" src="system/js/first-required/UIObject.js" id="stylesheet_system_js_first-required_UIObject"></script>
+<script type="text/javascript" src="system/js/first-required/utils.js" id="stylesheet_system_js_first-required_utils"></script>
+<script type="text/javascript" src="app/js/first-required/Export.js" id="stylesheet_app_js_first-required_Export"></script>
+<script type="text/javascript" src="app/js/first-required/PConfig.js" id="stylesheet_app_js_first-required_PConfig"></script>
+<script type="text/javascript" src="system/js/then-required/dbtables/CREATE_TABLES.js" id="stylesheet_system_js_then-required_dbtables_CREATE_TABLES"></script>
+<script type="text/javascript" src="app/js/then-required/App.js" id="stylesheet_app_js_then-required_App"></script>
+<script type="text/javascript" src="app/js/then-required/app/ChooserTexte.js" id="stylesheet_app_js_then-required_app_ChooserTexte"></script>
+<script type="text/javascript" src="app/js/then-required/app/ChromeFile.js" id="stylesheet_app_js_then-required_app_ChromeFile"></script>
+<script type="text/javascript" src="app/js/then-required/app/Comment.js" id="stylesheet_app_js_then-required_app_Comment"></script>
+<script type="text/javascript" src="app/js/then-required/app/FormComment.js" id="stylesheet_app_js_then-required_app_FormComment"></script>
+<script type="text/javascript" src="app/js/then-required/app/jquery-min.js" id="stylesheet_app_js_then-required_app_jquery-min"></script>
+<script type="text/javascript" src="app/js/then-required/app/main.js" id="stylesheet_app_js_then-required_app_main"></script>
+<script type="text/javascript" src="app/js/then-required/app/Mot.js" id="stylesheet_app_js_then-required_app_Mot"></script>
+<script type="text/javascript" src="app/js/then-required/app/Sandbox.js" id="stylesheet_app_js_then-required_app_Sandbox"></script>
+<script type="text/javascript" src="app/js/then-required/app/Texte.js" id="stylesheet_app_js_then-required_app_Texte"></script>
+<script type="text/javascript" src="app/js/then-required/app/UI.js" id="stylesheet_app_js_then-required_app_UI"></script>
+<script type="text/javascript" src="app/js/then-required/Preferences.js" id="stylesheet_app_js_then-required_Preferences"></script>
+
+</body>
+</html>

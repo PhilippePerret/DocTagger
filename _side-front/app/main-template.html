@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Doc Tagger</title>
+  </head>
+  __CSS__
+<body>
+
+<section id="content">
+  <div id="document">
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+  </div>
+
+  <div id="comments">
+  </div>
+</section>
+
+<section id="tools">
+  <button type="button" id="btn-sandbox">ESSAYER… (sandbox)</button>
+  <button type="button" id="btn-refresh-ui">Rafraichir UI</button>
+  <input type="button" id="btn-open" value="Ouvrir le texte…">
+  <input type="button" id="btn-save" value="Enregistrer dans…">
+  <button id="btn-deselect" type="button" class="small">Déselectionner</button>
+  <fieldset id="fs-author">
+    <legend>Auteur</legend>
+    <input type="text" id="comment-author-name" value="Philippe perret" placeholder="Votre nom">
+    <input type="text" id="comment-author-dim" value="PP" placeholder="Vos initiales">
+  </fieldset>
+</section>
+
+
+<!--
+  FORMULAIRE D'ÉDITION/CRÉATION DE COMMENTAIRE
+ -->
+<div id="form-comment" class="form closed">
+  <input type="hidden" id="comment-id" name="comment-id" value="">
+  <div class="row">
+    <!-- Menu pour le type de commentaire -->
+    <span class="libelle">Type</span>
+    <select id="comment-type" name="comment-type"></select>
+    <!-- Menu pour la couleur -->
+    <span class="libelle">Couleur</span>
+    <select id="comment-color">
+      <option value="red">Rouge</option>
+      <option value="green">Vert</option>
+      <option value="blue">Bleu</option>
+      <option value="paleblue">Bleu pâle</option>
+      <option value="fushia">Fushia</option>
+      <option value="purple">Pourpre</option>
+    </select>
+    <!-- Menu pour l'intensité -->
+    <span class="libelle">Intensité</span>
+    <select id="comment-intensity" name="comment-intensity">
+      <option value="1">faible</option>
+      <option value="5">moyen</option>
+      <option value="9">fort</option>
+    </select>
+  </div>
+  <div class="row">
+    <textarea id="comment-content" name="comment-content"></textarea>
+  </div>
+  <div class="row buttons">
+    <button id="btn-save-comment" type="button" class="main">Enregistrer</button>
+  </div>
+  <div style="clear:both;"></div>
+</div>
+
+<script type="text/javascript" src="system/js/main.js"></script>
+__SCRIPTS__
+
+</body>
+</html>

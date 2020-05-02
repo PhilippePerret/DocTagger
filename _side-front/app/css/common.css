@@ -1,0 +1,25 @@
+.small {
+  font-size:0.83em;
+}
+
+
+button.main {
+  font-size:14pt;
+  padding:7px 18px;
+  background-color: green;
+  color:white;
+}
+
+/* Une liste dont les éléments doivent être mis en exergue au survol */
+ul {
+  list-style:none;
+  display:inline-block;
+}
+ul li {
+  padding:0px 12px 2px;
+}
+ul li:hover {
+  background-color: #569de6;
+  color:white;
+  cursor: pointer;
+}

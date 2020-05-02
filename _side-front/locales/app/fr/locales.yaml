@@ -1,0 +1,71 @@
+app:
+  word:
+    analyse:    Analyse
+    ignore:     Ignorer
+    unignore:   Reconsidérer
+  locution:
+    analyse:
+      again: "Analyser à nouveau…"
+    canon:
+      ignore:
+        all:  Ignorer tous
+        les:  "Ignorer les ${nombre}"
+      unignore:
+        all:  Reconsidérer le canon
+    proximity:
+      update: "Actualiser les proximités"
+    report:
+      display:  "Afficher le rapport"
+    word:
+      delete:  "Supprimer le mot"
+
+ptexte:
+  alert:
+    texte-required: "Un texte courant est requis. Utiliser le menu 'Ouvrir…'."
+  analyse:
+    confirm-force:  "Es-tu vraiment certain de vouloir recommencer toute l'analyse de ce texte ?\nConcrètement, toutes les modifications (enregistrement des proximités ignorées, remplacement de mots, etc.) seront définitivement perdues.\n\nDois-je vraiment procéder à la destruction de toutes ces modifications ?"
+  update-offsets:
+    error:
+      word-already-traited: "Le mot #${id} '${real}' a déjà été traité => boucle infinie."
+      paragraph-already-traited: "Le paragraphe #${id} a déjà été traité => boucle infinie."
+      page-already-traited: "La page #${num} a déjà été traitée => boucle infinie."
+  message:
+    offset:
+      no-offset-rectified:
+        long: "Aucun offset de mot n'a changé, je peux m'arrêter là."
+        flash: "Aucun changement d'offset."
+
+pmot:
+  create:
+    error:
+      data-required: "[IMPLEMENTATION] les +data+ Data sont requises pour créer un nouveau mot."
+      after:
+        required: "[IMPLEMENTATION] Le mot avant est requis pour créer le nouveau mot PMot"
+        must-be-pmot-instance: "[IMPLEMENTATION] Le mot avant (after) doit être une instance de PMot, pour créer le nouveau mot PMot"
+  replace:
+    confirm-when-new-prox: "Ce remplacement va créer une proximité avec le mot '${motProx}' situé à ${distance} caractères.\n\nDois-je procéder quand même au remplacement ?"
+  insert:
+    error:
+      invalid-new-word: "Le premier argument pour l'insertion d'un mot doit être soit une table [Object] contenant les données du mot."
+      bad-insertion: "Le mot a été mal inséré : ${raison}. L'analyse doit être réparée pour ne pas entrainer d'autres problèmes graves… (Analyse ›› Réparer…)"
+      first-mot-bad-next: "le mot suivant du premier mot est mal affecté"
+      inserted-bad-next: "le mot suivant du mot inséré  est mal affecté"
+      next-mot-bad-prev: "le mot précédent du mot suivant est mal affecté"
+      inserted-bad-prev: "le mot précédent du mot inséré est mal affecté"
+  ask:
+    replace:
+      title:    "Remplacement de mot"
+      question: "Par quoi remplacer le mot “${mot}” ?"
+
+canon:
+  ignore:
+    confirmation: "Tous les mots de ce canons sont ignorés. ${annuler}"
+  unignore:
+    confirmation: "Tous les mots de ce canon sont à nouveau considérés."
+  ask:
+    ignore: "Dois-je vraiment ignorer tous les mots de canon “${canon}” ?"
+
+proximity:
+  error:
+    update:
+      mot-required: "Pour actualiser les proximités, un premier mot est requis (le texte ne semble pas en contenir…)."

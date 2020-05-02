@@ -1,0 +1,34 @@
+word:
+  cancel:     Annuler
+  fix:        Réparer
+  no:         Non
+  ok:         OK
+  OK:         OK
+  yes:        Oui
+  Renounce:   Renoncer
+  renounce:   Renoncer
+  replace:    "Remplacer…"
+
+locution:
+  app:
+    reload: 'Recharger l’application'
+
+error:
+  # Dialog windows
+  dialog:
+    message:
+      unfound: "[IMPLEMENTATION] Locale introuvable : '${locale}'."
+    confirm:
+      options:
+        required: "[IMPLEMENTATION] Les options sont obligatoires en second argument de la fonction 'confirm'. Soit comme une méthode de retour (recevant le choix de l'utilisateur), soit comme une table de définition (définissant notamment les boutons)."
+  # DMenu
+  dmenu:
+    observer:
+      required: "[IMPLEMENTATION] La propriété 'observer' est requise, pour DMenu"
+    text:
+      required: "[IMPLEMENTATION] La propriété 'text' est requise, pour DMenu"
+    id:
+      required: "[IMPLEMENTATION] La propriété 'id' est requise, pour DMenu"
+    owner:
+      required: "[IMPLEMENTATION] Un owner (propriétaire) est requis, pour un DMenu"
+      should-respond-to: "[IMPLEMENTATION] Le propriétaire 'owner' devrait répondre à l'observeur d'évènement '${observer}'"
