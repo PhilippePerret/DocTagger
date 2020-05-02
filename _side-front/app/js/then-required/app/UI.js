@@ -16,7 +16,7 @@ class UI {
   }
   static observe(){
     [
-      [this.ButtonOpen, 'click', ChooserTexte.choose.bind(ChooserTexte)],
+      [this.ButtonOpen, 'click', Texte.chooseTexte.bind(Texte)],
       [this.ButtonRefreshUI, 'click', this.refresh.bind(this)],
       [this.ButtonSave, 'click', Comment.saveAll.bind(Comment)],
       [this.ButtonDeselectAllMots, 'click', Mot.deselectAll.bind(Mot)],

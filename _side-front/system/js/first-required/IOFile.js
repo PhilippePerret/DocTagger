@@ -106,7 +106,7 @@ save(options){
   options = options || {}
   this.options = options
   if(!options.no_waiting_msg){
-    UI.startWait(`Sauvegarde du fichier "${this.name}" en cours…`)
+    sysUI.startWait(`Sauvegarde du fichier "${this.name}" en cours…`)
   }
   if(options.after) this.methodAfterSaving = options.after
   this.checkBackupFolder()
@@ -205,7 +205,7 @@ endSave(err){
   interrompue
 **/
 endSavingInAnyCase(){
-  if(!this.options.no_waiting_msg) UI.stopWait()
+  if(!this.options.no_waiting_msg) sysUI.stopWait()
   this.saving = false
 }
 

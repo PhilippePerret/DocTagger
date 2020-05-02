@@ -22,19 +22,12 @@ class Comment {
     return this.lastId ;
   }
 
-  static async load(commentsFile){
+  static async load(texte){
     this.reset()
     await this.DBclear()
-    // Chargement des commentaires dans le fichier
-    const reader = new FileReader()
-    reader.onload = e => {
-      console.log("Chargement des commentaires :", e.target.result)
-      // Il faut mettre les commentaires dans la base de données
-      // TODO
-    }
-    reader.readAsArrayBuffer(commentsFile/* peut-être .file() */);
-    // reader.readAsText(texteFile/* peut-être .file() */);
+    console.log("texte.commentsPath", texte.commentsPath)
   }
+
 
   /**
     Récupère le dernier identifiant

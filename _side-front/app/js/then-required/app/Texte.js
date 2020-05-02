@@ -10,40 +10,37 @@ class Texte {
 
   static async retrieveLastIfExists(){
     // On essaie de lire le fichier courant
-    var [texteFile, commentsFile] = await ChooserTexte.retrieveLastTexte()
-    // console.log("texteFile: ", texteFile)
-    // console.log("commentsFile: ", commentsFile)
-    if ( texteFile ) {
-      this.load(texteFile, commentsFile)
-    } else {
-      // Si aucun texte courant, on indique l'aide pour choisir un
-      // texte à commenter.
-      UI.divDocument.innerHTML = "<H3>Aide pour Doc-Tagger [à développer]</H3>"
-    }
+    var textePath = Prefs.get('texte-path')
+    if (textePath) { this.load(textePath) }
+    else { this.chooseTexte() }
   }
 
-  static load(texteFile, commentsFile){
-    // On écrit le texte dans la page
-    const reader = new FileReader();
-    reader.onload = e => {
-      console.log("e.target.result (dans load)", e.target.result)
-      this.defineTexte(e.target.result)
-      if (commentsFile) { Comment.load(commentsFile) }
+  // Méthode pour choisir un texte
+  static chooseTexte(){
+    var path = chooseFile()
+    // Vérifier que ce soit un fichier conforme
+    // TODO
+    if ( VALID_EXTENSIONS.includes(path.split('.').pop()) ) {
+      if (!path) return
+      Prefs.set('texte-path', path)
+      this.load(path)
+    } else {
+      error(`Le fichier n'a pas une extension conforme (extensions possible : ${VALID_EXTENSIONS.join(', ')})`)
     }
-    // reader.readAsArrayBuffer(texteFile/* peut-être .file() */);
-    reader.readAsText(texteFile/* peut-être .file() */);
   }
 
   // Chargement et préparation du texte +string+ (qui vient d'un fichier)
-  static defineTexte(string){
-    texte = new Texte('#document')
-    texte.setContent(string)
+  static load(textePath){
+    texte = new Texte('#document', textePath)
+    texte.setContent(IO.loadSync(textePath))
     texte.traite()
+    Comment.load(texte)
   }
 
   // ---------------------------------------------------------------------
-  constructor(conteneur){
+  constructor(conteneur, path){
     this.container = DGet(conteneur)
+    this.path = path
   }
   setContent(string){
     string = string.replace(/\r?\n/g,'<br>')
@@ -72,4 +69,14 @@ class Texte {
     // Affichage de ses commentaires
     Comment.displayAllComments();
   }
+  get commentPath(){
+    return this._commentsPath || (this._commentsPath = this.setCommentsPath())
+  }
+  setCommentsPath(){
+    this.folder = path.dirname(this.path)
+    this.affixe = path.basename(this.path, path.extname(this.path))
+    return path.join(this.folder, `${this.affixe}.doctagger`)
+  }
+
+  VALID_EXTENSIONS = ['md','mmd','text','txt','markdown']
 }

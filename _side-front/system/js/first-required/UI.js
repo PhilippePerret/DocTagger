@@ -1,11 +1,11 @@
 'use strict'
 /**
-  Constante UI
+  Constante sysUI
   version 1.5.1
   ------------
 
   Requis :
-    - UI.css
+    - sysUI.css
     - img/divers/waiter-rond-bleu.gif
 
   # version 1.5.1
@@ -16,11 +16,11 @@
       pas dans un container.
 
   # version 1.4.2
-    * Correction des arguments de UI.message, pour pouvoir mettre des options
+    * Correction des arguments de sysUI.message, pour pouvoir mettre des options
       et pas seulement un style.
 
   # version 1.4.1
-    * UI.error retourne false (pour pouvoir faire 'return UI.error("...")')
+    * sysUI.error retourne false (pour pouvoir faire 'return sysUI.error("...")')
     * On peut utiliser des retours chariots dans les messages ("\n")
 
   # version 1.4.0
@@ -50,16 +50,16 @@
     Suppression de tout ce qui concernait l'application 'Projet'
 
   # version 1.1.0
-    Ajout de UI.flash qui permet d'afficher des messages.
+    Ajout de sysUI.flash qui permet d'afficher des messages.
 
   # version 1.0.1
-    Ajout de la méthode UI.message et de l'objet UI.footerMessage
+    Ajout de la méthode sysUI.message et de l'objet sysUI.footerMessage
     Pour afficher des messages en bas de page.
 **/
 
 const HORLOGE_ATTENTE = '<img class="waiter" src="img/divers/waiter-rond-bleu.gif" />'
 
-const UI = {
+const sysUI = {
 
   // Pour écrire un message dans le pied de page
   message(msg, options){
@@ -152,8 +152,8 @@ const UI = {
 , setDimensions(){
     const my = this
         , hwindow = window.innerHeight
-        , hheader = UI.header.offsetHeight
-        , hfooter = UI.footer.offsetHeight
+        , hheader = sysUI.header.offsetHeight
+        , hfooter = sysUI.footer.offsetHeight
         , innerHeight = `${hwindow - (hheader + hfooter)}px`
   }
 
@@ -247,7 +247,7 @@ const UI = {
 
 
 }
-Object.defineProperties(UI,{
+Object.defineProperties(sysUI,{
   body:{get(){return document.querySelector('body')}}
 , header:{get(){return document.querySelector('section#header')}}
 , footer:{get(){return document.querySelector('section#footer')}}

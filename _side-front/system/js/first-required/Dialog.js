@@ -318,7 +318,7 @@ class HTMLDialog extends MDialog {
     const my = this
     let opts = this.options
     // Valeurs par défaut
-    opts.buttons || Object.assign(opts,{buttons:[{index:1, text:'OK', onclick:`UI.onClickOk.call(UI,'${this.dialogId}')`}]})
+    opts.buttons || Object.assign(opts,{buttons:[{index:1, text:'OK', onclick:`sysUI.onClickOk.call(sysUI,'${this.dialogId}')`}]})
     opts.title   || Object.assign(opts,{title: `Message de Proximit`})
     opts.icon    || Object.assign(opts, {icon: 'question.png'})
     // On définit le bouton principal

@@ -1,6 +1,9 @@
 .small {
   font-size:0.83em;
 }
+.tiny {
+  font-size:0.63em;
+}
 
 
 button.main {
@@ -22,4 +25,13 @@ ul li:hover {
   background-color: #569de6;
   color:white;
   cursor: pointer;
+}
+
+div.row {
+  margin-bottom:4px;
+}
+
+div.row span.libelle {
+  font-size:1.1em;
+  font-style:italic;
 }

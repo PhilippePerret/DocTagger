@@ -202,11 +202,11 @@ observe(){
   if ( this.isPrompt() ){
     this.answerField.addEventListener('keyup', this.onKeyUpAnswer.bind(this))
     this.answerField.addEventListener('keydown', this.onKeyDownAnswer.bind(this))
-    // this.answerField.addEventListener('focus', UI.onFocusTextField.bind(UI))
-    // this.answerField.addEventListener('blur',  UI.onBlurTextField.bind(UI))
+    // this.answerField.addEventListener('focus', sysUI.onFocusTextField.bind(sysUI))
+    // this.answerField.addEventListener('blur',  sysUI.onBlurTextField.bind(sysUI))
     this.answerField.focus()
 
-    // UI.onFocusTextField.bind(UI)({target: this.answerField[0]}/* ne sert à rien pour le moment*/)
+    // sysUI.onFocusTextField.bind(sysUI)({target: this.answerField[0]}/* ne sert à rien pour le moment*/)
   }
 }
 

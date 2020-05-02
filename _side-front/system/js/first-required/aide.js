@@ -30,7 +30,7 @@ const Aide = {
     this.domObj = DCreate('DIV',{id:'aide', text:this.content})
     let btnClose = '<a class="btn-close" onclick="Aide.toggle.call(Aide)">x</a>'
     this.domObj.prepend(DCreate('DIV',{class:'right', text:btnClose}))
-    UI.body.append(this.domObj)
+    sysUI.body.append(this.domObj)
   }
 , get content(){
 return `

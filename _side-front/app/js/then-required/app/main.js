@@ -20,14 +20,12 @@ function useAsyncFS(fs){
 }
 
 window.addEventListener("DOMContentLoaded", async (event) => {
-  console.log("Chargement terminé")
   UI.init()
-  // Texte.init()
-  // FormComment.init()
-  // Comment.init()
-  //
-  // // Pour récupérer et afficher le dernier texte s'il existe
-  // await Texte.retrieveLastIfExists()
+  Texte.init()
+  FormComment.init()
+  Comment.init()
 
-  console.log("Application prête.")
+  // Pour récupérer et afficher le dernier texte s'il existe
+  await Texte.retrieveLastIfExists()
+
 });

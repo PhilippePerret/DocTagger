@@ -14,7 +14,7 @@ div#form-comment.closed {
   transition: 0.5s;
 }
 div#form-comment.opened {
-  bottom: 3em;
+  bottom: 2.6em;
   transition: 0.5s;
 }
 

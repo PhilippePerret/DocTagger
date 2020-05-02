@@ -109,7 +109,7 @@ function DGetAll(selector, container){
   Pour obtenir un picto "?" qui doit afficher une aide, on utilise simplement :
   DCreate('AIDE', "Message d'aide à afficher, sans guillemets doubles droits.")
 
-  Il faut que la méthode qui construit appelle UI.setPictosAide(<container>)
+  Il faut que la méthode qui construit appelle sysUI.setPictosAide(<container>)
 
 **/
 function transmute(de, vers, property){
