@@ -7,6 +7,7 @@ const COMMENT_TYPES = {
   ort: {name: 'orthographe',  id: 'ort',  key: 'l'},
   que: {name: 'question',     id: 'que',  key: 'q'}
 }
+
 class Comment {
   static init(){
     this.saveAll    = this.saveAll.bind(this)
@@ -31,8 +32,6 @@ class Comment {
 
   /**
     Récupère le dernier identifiant
-    Note : pour le moment, comme je suis encore assez "fragile", je récupère
-    tout et je regarde le dernier ID enregistré.
   **/
   static async displayAllComments(){
     var allcomments = await this.DBgetAll()

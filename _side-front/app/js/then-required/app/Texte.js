@@ -3,11 +3,14 @@
 let texte ;
 
 class Texte {
+
   static init(){
-    texte = new Texte('#document')
-    texte.traite();
   }
 
+  /**
+    Méthode qui, au démarrage, essaie de recharger le dernier texte
+    (avec ses commentaires)
+  **/
   static async retrieveLastIfExists(){
     // On essaie de lire le fichier courant
     var textePath = Prefs.get('texte-path')
@@ -15,26 +18,29 @@ class Texte {
     else { this.chooseTexte() }
   }
 
-  // Méthode pour choisir un texte
+  /**
+    Méthode qui permet d'ouvrir un nouveau texte, éventuellement avec
+    ses commentaires.
+  **/
   static chooseTexte(){
     var path = chooseFile()
-    // Vérifier que ce soit un fichier conforme
-    // TODO
+    if (!path) return
     if ( VALID_EXTENSIONS.includes(path.split('.').pop()) ) {
-      if (!path) return
       Prefs.set('texte-path', path)
       this.load(path)
     } else {
-      error(`Le fichier n'a pas une extension conforme (extensions possible : ${VALID_EXTENSIONS.join(', ')})`)
+      error(`Le fichier ne possède pas une extension conforme (extensions possibles : ${VALID_EXTENSIONS.join(', ')})`)
     }
   }
 
-  // Chargement et préparation du texte +string+ (qui vient d'un fichier)
+  /**
+    Chargement et préparation du texte du chemin d'accès +textePath+
+    Si les commentaires existent, ils sont préparés aussi.
+  **/
   static load(textePath){
     texte = new Texte('#document', textePath)
     texte.setContent(IO.loadSync(textePath))
     texte.traite()
-    Comment.load(texte)
   }
 
   // ---------------------------------------------------------------------
@@ -52,6 +58,10 @@ class Texte {
   get content(){
     return this._content || (this._content = this.container.innerHTML)
   }
+
+  /**
+    Affichage du texte, préparation et affichage de ses commentaires
+  **/
   traite(){
     Mot.init()
     var imot = 0;
@@ -64,18 +74,18 @@ class Texte {
       var mot = new Mot(Number(i))
       mot.observe()
     }
-    console.log("Texte préparé.")
+    console.info("--- Texte préparé. ---")
+    this.comments.displayIfExists()
+  }
+  get comments(){
+    return this._comments || (this._comments = new TexteComments(this))
+  }
 
-    // Affichage de ses commentaires
-    Comment.displayAllComments();
+  get folder(){
+    return this._folder || (this._folder = path.dirname(this.path))
   }
-  get commentPath(){
-    return this._commentsPath || (this._commentsPath = this.setCommentsPath())
-  }
-  setCommentsPath(){
-    this.folder = path.dirname(this.path)
-    this.affixe = path.basename(this.path, path.extname(this.path))
-    return path.join(this.folder, `${this.affixe}.doctagger`)
+  get affixe(){
+    return this._affixe || (this._affixe = path.basename(this.path, path.extname(this.path)))
   }
 
   VALID_EXTENSIONS = ['md','mmd','text','txt','markdown']
