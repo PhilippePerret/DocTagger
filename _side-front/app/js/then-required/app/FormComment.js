@@ -32,16 +32,11 @@ class FormComment {
   static prepare(){
     this.hiddenId = this.obj.querySelector('#comment-id')
     this.textareaContent = DGet('#comment-content')
-    this.menuColors = this.obj.querySelector('#comment-color')
+    this.divColors = this.obj.querySelector('#comment-color')
+    this.colorSelector = ColorSelector.createIn(this.divColors)
+
     this.menuTypes = this.obj.querySelector('#comment-type')
-    this.menuTypes.innerHTML = ''
-    for( var typ in COMMENT_TYPES) {
-      var dtyp = COMMENT_TYPES[typ]
-      var opt = document.createElement('OPTION')
-      opt.value = dtyp.id
-      opt.innerHTML = dtyp.name
-      this.menuTypes.appendChild(opt)
-    }
+    UI.peupleMenu(this.menuTypes, COMMENT_TYPES)
     this.menuIntensity = this.obj.querySelector('#comment-intensity')
     this.btnSave = DGet('#btn-save-comment')
     this.btnSave.addEventListener('click', this.onClickSave.bind(this))

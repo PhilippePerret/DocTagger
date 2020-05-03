@@ -1,0 +1,42 @@
+/* Le div principal */
+div.color-selector {
+  display:inline-block;
+  text-align:center;
+}
+div.color-selector:not(.opened) {
+  width: 32px;
+  height: 24px;
+  overflow:hidden;
+}
+div.color-selector.opened {
+  width: 90px;
+  height:auto;
+}
+
+/* Le div contenant la couleur témoin */
+.color-selector .div-selected {
+  width: 32px;
+}
+
+.color-selector.opened .div-colors {
+  display:inline-block;
+  border-top:1px solid grey;
+  margin-top:2px;
+  padding-top: 4px;
+}
+
+.color-selector:not(.opened) .div-colors {
+  display:none;
+}
+
+.colorbox {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border-radius:5px;
+  border: 2px solid transparent;
+  margin-left:4px;
+}
+.colorbox:hover {
+  border-color: blue;
+}

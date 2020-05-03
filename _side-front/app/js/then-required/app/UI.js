@@ -1,7 +1,21 @@
 class UI {
+
+  static peupleMenu(menu, values){
+    menu.innerHTML = ''
+    for(var k in values){
+      var dvalue = values[k]
+      var opt = document.createElement('OPTION')
+      opt.innerHTML = dvalue.name
+      opt.value = k
+      menu.appendChild(opt)
+    }
+  }
+
   static init(){
     this.divDocument          = DGet('#document')
     this.divComments          = DGet('#comments')
+
+    this.divCouleurs         = DGet('div#comment-color') // TODO plutôt dans le formulaire
 
     this.ButtonOpen           = DGet('#btn-open')
     this.ButtonSave           = DGet('#btn-save')
