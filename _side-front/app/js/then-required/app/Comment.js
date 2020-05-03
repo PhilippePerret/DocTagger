@@ -72,6 +72,7 @@ class Comment {
     Méthode pour enregistrer dans indexedDB le commentaire
   **/
   static store(comment, callback){
+    console.log("Commentaire à enregistrer :", comment)
     var dbmethod = function(os){
       var rq = os.add(comment, comment.id)
       rq.onsuccess = e => {
