@@ -163,20 +163,23 @@ class Comment {
       console.log("mot ", mot, mot.top)
       if ( top > mot.top ) top = Number(mot.top)
     })
-    var color = this.data.color || 'blue'
     // Fabriquer le div du commentaire
     comObj = document.createElement('DIV')
     comObj.className = 'com'
     comObj.id = `com${this.data.id}`
     comObj.innerHTML = this.data.content
-    comObj.setAttribute('style', `top:${top}px;color:${color};opacity:${this.opacity};`)
+    comObj.setAttribute('style', `top:${top}px;color:${this.color};opacity:${this.opacity};`)
     // Peindre les mots du commentaire
-    this.mots.forEach(mot => mot.setColor(color))
+    this.mots.forEach(mot => mot.setColor(this.color))
     // Poser un observateur sur le commentaire (OU mettre des boutons
     // pour l'éditer)
     UI.divComments.appendChild(comObj)
   }
 
+  // Couleur HTML de l'élément
+  get color(){
+    return this._color || (this._color = ColorSelector.COLORS[this.data.colorId].value)
+  }
   get opacity(){
     return this.OPACITY_BY_INTENSITY[this.data.intensity]
   }

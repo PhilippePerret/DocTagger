@@ -15,8 +15,6 @@ class UI {
     this.divDocument          = DGet('#document')
     this.divComments          = DGet('#comments')
 
-    this.divCouleurs         = DGet('div#comment-color') // TODO plutôt dans le formulaire
-
     this.ButtonOpen           = DGet('#btn-open')
     this.ButtonSave           = DGet('#btn-save')
     this.ButtonRefreshUI      = DGet('#btn-refresh-ui')

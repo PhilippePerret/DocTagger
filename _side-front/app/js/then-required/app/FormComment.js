@@ -33,7 +33,7 @@ class FormComment {
     this.hiddenId = this.obj.querySelector('#comment-id')
     this.textareaContent = DGet('#comment-content')
     this.divColors = this.obj.querySelector('#comment-color')
-    this.colorSelector = ColorSelector.createIn(this.divColors)
+    this.colorSelector = ColorSelector.createIn(this.divColors, 'form-color')
 
     this.menuTypes = this.obj.querySelector('#comment-type')
     UI.peupleMenu(this.menuTypes, COMMENT_TYPES)
@@ -61,8 +61,9 @@ class FormComment {
       , type: this.menuTypes.value
       , content: this.textareaContent.value
       , intensity: this.menuIntensity.value
-      , color: this.menuColors.value
+      , colorId: this.colorSelector.value
       , author: UI.FieldAuthorDim.value // hors du formulaire
     }
   }
+
 }

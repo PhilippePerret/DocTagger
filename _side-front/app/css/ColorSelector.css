@@ -1,5 +1,14 @@
+/* Pour contenir le sélection de couleur */
+span.container-color-selector {
+  display:inline-block;
+  position:relative;
+  width:30px;
+  height:15px;
+}
 /* Le div principal */
 div.color-selector {
+  position:absolute;
+  top:0;left:0;
   display:inline-block;
   text-align:center;
 }

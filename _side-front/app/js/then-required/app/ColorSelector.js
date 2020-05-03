@@ -5,11 +5,21 @@
   *
 *** --------------------------------------------------------------------- */
 class ColorSelector  {
-  static createIn(container){
-    var colsel = new this()
+
+  static createIn(container, id){
+    var colsel = new this(id)
     colsel.build()
     container.appendChild(colsel.obj)
     return colsel
+  }
+
+  static add(colselector){
+    this.items = this.items || {}
+    Object.assign(this.items, {[colselector.id]: colselector})
+  }
+
+  static get(sel_id){
+    return this.items[sel_id]
   }
 
   static get COLORS(){
@@ -26,8 +36,15 @@ class ColorSelector  {
     } return this._colors
   }
 
+  /**
+    INSTANCE ColorSelector
 
-  constructor(){}
+    On récupère la valeur de la couleur par <ColorSelector>#colorId
+  **/
+  constructor(id){
+    this.id = id
+    this.constructor.add(this)
+  }
 
   close(){
     console.log("-> close")
@@ -39,6 +56,7 @@ class ColorSelector  {
 
   build(){
     var cont = document.createElement('DIV')
+    cont.id = `color-selector-${this.id}`
     cont.className = 'color-selector'
     UI.listen(cont,'click', this.open.bind(this))
     this.obj = cont
@@ -70,18 +88,16 @@ class ColorSelector  {
   }
 
   onChooseColor(e){
-    console.log(e.target)
     var targ = e.target
     var colorId = Number(targ.getAttribute('data-color'))
-    console.log("Color", colorId)
-    // On met la couleur du fond au span du div-selected
     this.setColorTemoin(colorId)
-    // Il faut refermer le div
     this.close()
     return stopEvent(e)
   }
 
   setColorTemoin(colorId){
+    this.value    = colorId
+    this.colorId  = colorId
     this.spanTemoin.style = `background-color:${this.constructor.COLORS[colorId].value};`
   }
 
