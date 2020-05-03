@@ -169,7 +169,7 @@ class Comment {
     comObj.className = 'com'
     comObj.id = `com${this.data.id}`
     comObj.innerHTML = this.data.content
-    comObj.setAttribute('style', `top:${top}px;color:${color};opacity:0.${this.data.intensity};`)
+    comObj.setAttribute('style', `top:${top}px;color:${color};opacity:${this.opacity};`)
     // Peindre les mots du commentaire
     this.mots.forEach(mot => mot.setColor(color))
     // Poser un observateur sur le commentaire (OU mettre des boutons
@@ -177,6 +177,22 @@ class Comment {
     UI.divComments.appendChild(comObj)
   }
 
+  get opacity(){
+    return this.OPACITY_BY_INTENSITY[this.data.intensity]
+  }
+  get OPACITY_BY_INTENSITY(){
+    return {
+       1:0.6
+      ,2:0.65
+      ,3:0.7
+      ,4:0.75
+      ,5:0.8
+      ,6:0.85
+      ,7:0.9
+      ,8:0.95
+      ,9:1
+    }
+  }
   save(){
     // console.log("Je vais sauver", this.data)
     this.constructor.store.call(this.constructor, this.data)

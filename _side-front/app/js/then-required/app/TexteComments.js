@@ -30,6 +30,7 @@ class TexteComments {
     await this.load()
     console.log("comments récupérés :", this.data.comments)
     var allcomments = this.data.comments.map(dcomment => new Comment(dcomment))
+    allcomments.forEach(comment => comment.display())
     await Comment.storeAll(allcomments)
   }
 
