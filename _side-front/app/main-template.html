@@ -8,20 +8,33 @@
 <body>
 
 <section id="content">
-  <div id="document">
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+  <!-- Colonne document -->
+  <div id="column-document">
+    <div id="document">
+  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    </div>
+    <div id="document-tools">
+      <!-- Boutons sous le document -->
+    </div>
   </div>
 
-  <div id="comments">
+  <!-- Colonne commentaires -->
+  <div id="column-comments">
+    <div id="comments">
+    </div>
   </div>
+
 </section>
 
 <section id="tools">
+  <div class="fleft">
+    <button id="btn-deselect" type="button" class="tiny">Déselectionner</button>
+  </div>
   <button type="button" id="btn-sandbox">ESSAYER… (sandbox)</button>
   <button type="button" id="btn-refresh-ui">Rafraichir UI</button>
   <input type="button" id="btn-open" value="Ouvrir le texte…">
   <input type="button" id="btn-save" value="Enregistrer dans…">
-  <button id="btn-deselect" type="button" class="small">Déselectionner</button>
   <fieldset id="fs-author">
     <legend>Auteur</legend>
     <input type="text" id="comment-author-name" value="Philippe perret" placeholder="Votre nom">

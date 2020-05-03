@@ -5,6 +5,9 @@
   font-size:0.63em;
 }
 
+.fleft {float:left;}
+.fright {float:right;}
+
 
 button.main {
   font-size:14pt;

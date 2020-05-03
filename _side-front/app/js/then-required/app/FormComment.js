@@ -6,6 +6,14 @@
 
 *** --------------------------------------------------------------------- */
 class FormComment {
+  /**
+    Resetter le formulaire
+    Ça consiste à le vider complètement pour éviter les doublons.
+  **/
+  static reset(){
+    this.textareaContent.value = ''
+    this.hiddenId.value = ''
+  }
   static open(){
     this.obj.classList.remove('closed')
     this.obj.classList.add('opened')
@@ -15,10 +23,7 @@ class FormComment {
   static close(){
     this.obj.classList.add('closed')
     this.obj.classList.remove('opened')
-    // On réinitialise tout pour éviter tout doublon
-    this.textareaContent.value = ''
-    this.hiddenId.value = ''
-    Mot.deselectAll.call(Mot)
+    this.reset()
   }
   static init(){
     this.obj = DGet('#form-comment')
@@ -49,6 +54,7 @@ class FormComment {
     const comment = new Comment(this.getData(), Mot.selections)
     comment.save()
     this.close()
+    Mot.deselectAll.call(Mot)
   }
 
   /**

@@ -53,9 +53,11 @@ function initialize () {
     screenHeight  = height
 
     const windowOptions = {
-        width: 1520             // TODO Customisable
+        width: 1600             // TODO Customisable
       , minWidth: 680           // TODO Customisable
       , height: 840             // TODO Customisable
+      , x:0
+      , y:0
       , icon: __dirname+'/Imagerie/Icone/Icone-1024x1024.icns'
       , title: app.name
       , webPreferences: {

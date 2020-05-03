@@ -42,7 +42,7 @@ class Mot {
 
   static deselectAll(){
     this.selections.forEach(mot => {mot.setState(false)})
-    // this.selections = []
+    FormComment.close()
   }
 
   // ---------------------------------------------------------------------

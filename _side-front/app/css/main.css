@@ -11,21 +11,31 @@ section#content {
   zoom:160%;
   overflow: auto;
   height: 400px;
+  user-select:none;
 }
-section#content div#document {
+section#content div#column-document {
   grid-column:1;
   grid-row:1;
   width:100%;
-  text-align: justify;
-  user-select:none;
-  -webkit-user-select: none;
-
+  position:relative;
 }
-section#content div#comments {
+section#content div#column-document div#document {
+  text-align: justify;
+  -webkit-user-select: none;
+  padding:2em;
+}
+section#content div#column-document div#document-tools {
+  position:absolute;
+  bottom:0;
+  text-align:left;
+}
+section#content div#column-comments {
   grid-column:3;
   grid-row:1;
   height:auto;
   width:100%;
+}
+section#content div#comments {
   text-align:justify;
   font-size: 0.85em;
 }
