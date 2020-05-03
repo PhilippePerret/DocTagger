@@ -10,7 +10,6 @@ const COMMENT_TYPES = {
 
 class Comment {
   static init(){
-    this.saveAll    = this.saveAll.bind(this)
     this.reset()
   }
 
@@ -23,13 +22,6 @@ class Comment {
     return this.lastId ;
   }
 
-  static async load(texte){
-    this.reset()
-    await this.DBclear()
-    console.log("texte.commentsPath", texte.commentsPath)
-  }
-
-
   /**
     Récupère le dernier identifiant
   **/
@@ -41,32 +33,6 @@ class Comment {
       var comment = new Comment(dcomment)
       comment.display()
     })
-  }
-
-  /**
-    Méthode pour enregistrer tous les commentaires dans un fichier
-    Si le fichier n'est pas encore déterminé, on le choisit.
-  **/
-  static async saveAll(){
-    let chooser = new ChooserTexte()
-    let commentsFile = await chooser.restoreCommentsEntry()
-    console.log("[saveAll] commentsFile:", commentsFile)
-    var allComments = await this.DBgetAll()
-    console.log("allComments = ", allComments)
-    // Créer un writer pour le fichier commentaires
-    commentsFile.createWriter(function(fileWriter) {
-      fileWriter.onwriteend = function(e) {
-        console.info('Enregistrement terminé');
-      };
-      fileWriter.onerror = console.error
-      var alldata = {
-        author: {patronyme: UI.FieldAuthor.value, diminutif: UI.FieldAuthorDim.value},
-        comments: allComments,
-        date: null // la régler plus tard
-      }
-      var blob = new Blob([JSON.stringify(alldata)], {type: 'text/plain'});
-      fileWriter.write(blob);
-    }, console.error)
   }
 
   /**
@@ -116,6 +82,24 @@ class Comment {
       rq.onerror = console.error
     }
     this.dbrequest(dbmethod, callback)
+  }
+
+  static async storeAll(allcomments, callback){
+    var comment ;
+    var dbmethod = async (os) => {
+      while (comment = allcomments.shift()){
+        await this.storeNext(os, comment)
+      }
+    }
+    this.dbrequest(dbmethod, callback)
+  }
+  static storeNext(os, comment){
+    // console.log("Comment à enregistrer :", comment.data)
+    return new Promise((ok,ko)=>{
+      var rq = os.add(comment.data, comment.data.id)
+      rq.onsuccess = ok
+      rq.onerror = ko
+    })
   }
 
   static dbrequest(dbMethod, callback){

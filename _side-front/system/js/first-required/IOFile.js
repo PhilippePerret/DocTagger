@@ -91,6 +91,7 @@ constructor(p_or_owner, otherPath){
  * en bon fichier tout en faisant un backup de l'original.
 
  @param {Object|Undefined} options  Pour définir des options
+    :after                La méthode pour suivre
     :no_warm_if_shorter   Si true, ne produira pas l'alerte de document 20 %
                           moins gros.
     :no_waiting_msg       Si true, on n'affiche pas le message d'attente
@@ -129,7 +130,7 @@ save(options){
   } catch (e) {
     this.endSavingInAnyCase()
     if(e){
-      F.error(`Erreur au cours de l'enregistrement du fichier : ${e}`)
+      error(`Erreur au cours de l'enregistrement du fichier : ${e}`)
       log.error(e)
       log.error("CODE FAUTIF :\n")
       log.warn(RC + scode)
@@ -150,7 +151,7 @@ execSave(){
   } catch (e) {
     this.endSavingInAnyCase()
     if(e){
-      F.error(`Erreur au cours de l'enregistrement du fichier : ${e}`)
+      error(`Erreur au cours de l'enregistrement du fichier : ${e}`)
       log.error(e)
       log.error("CODE FAUTIF :\n")
       log.warn(RC + this.savedcode)
@@ -171,7 +172,7 @@ afterTempSaved(err){
   } catch (e) {
     this.endSavingInAnyCase()
     log.error(e)
-    F.error(e)
+    error(e)
     return false
   }
 }
@@ -180,12 +181,12 @@ endSave(err){
   try {
     if (err){
       this.endSavingInAnyCase()
-      return F.error(err)
+      return error(err)
     }
     this.tempExists() || raise(T('temps-file-unfound',{fpath: this.tempPath}))
     this.tempSize > 0 || raise(T('temp-file-empty-stop-save',{fpath: this.tempPath}))
     fs.rename(this.tempPath, this.path, (err)=>{
-      if (err) F.error(err)
+      if (err) error(err)
       else {
         // FIN !
         this.endSavingInAnyCase()
@@ -195,7 +196,7 @@ endSave(err){
     })
   } catch (e) {
     this.endSavingInAnyCase()
-    F.error(e)
+    error(e)
   }
 }
 
@@ -223,7 +224,7 @@ load(options){
   if(options.after)   this.methodAfterLoading = options.after
   my.loaded = false
   fs.readFile(this.path, 'utf8', (err, data) => {
-    err ? F.error(err) : my.code = data
+    err ? error(err) : my.code = data
     my.endLoad(!err)
   })
 }
@@ -280,7 +281,7 @@ backup(){
     //   op: 'rename dans backup()', src: my.path, dst: my.backupPath
     // })
     fs.rename(my.path, my.backupPath, my.endSave.bind(my))
-  } catch (e) {F.error(e)}
+  } catch (e) {error(e)}
   my = null
 }
 
@@ -291,7 +292,7 @@ retrieveBackup(){
     fs.unlinkSync(this.path)
     if(this.backupExists()){
       fs.copyFile(my.backupPath,my.path, (err) => {
-        if(err){ F.error(err) ; my.endLoad }
+        if(err){ error(err) ; my.endLoad }
         // Puis on réessaye…
         return this.loadIfExists()
       })
@@ -300,7 +301,7 @@ retrieveBackup(){
       my.endLoad(false)
     }
   } catch (e) {
-    F.error(e)
+    error(e)
   }
   my = null
 }
@@ -406,8 +407,8 @@ decode(){
     }
   } catch (e) {
     console.log(`ERROR ${this.format} AVEC:`, this.path)
-    F.error('Une erreur s’est produite en lisant le fichier '+this.path)
-    F.error(e)
+    error('Une erreur s’est produite en lisant le fichier '+this.path)
+    error(e)
     return null
   }
 }

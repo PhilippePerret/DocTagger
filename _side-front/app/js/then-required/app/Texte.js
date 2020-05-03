@@ -5,6 +5,7 @@ let texte ;
 class Texte {
 
   static init(){
+    this.VALID_EXTENSIONS = ['md','mmd','text','txt','markdown']
   }
 
   /**
@@ -25,11 +26,11 @@ class Texte {
   static chooseTexte(){
     var path = chooseFile()
     if (!path) return
-    if ( VALID_EXTENSIONS.includes(path.split('.').pop()) ) {
+    if ( this.VALID_EXTENSIONS.includes(path.split('.').pop()) ) {
       Prefs.set('texte-path', path)
       this.load(path)
     } else {
-      error(`Le fichier ne possède pas une extension conforme (extensions possibles : ${VALID_EXTENSIONS.join(', ')})`)
+      error(`Le fichier ne possède pas une extension conforme (extensions possibles : ${this.VALID_EXTENSIONS.join(', ')})`)
     }
   }
 
@@ -88,5 +89,4 @@ class Texte {
     return this._affixe || (this._affixe = path.basename(this.path, path.extname(this.path)))
   }
 
-  VALID_EXTENSIONS = ['md','mmd','text','txt','markdown']
 }

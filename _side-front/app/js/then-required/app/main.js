@@ -12,7 +12,7 @@ function error(msg){
 
 function raise(msg){
   if ( msg ) throw new Error(msg)
-  else throw null
+  else throw('')
 }
 
 function useAsyncFS(fs){

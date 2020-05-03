@@ -143,7 +143,7 @@ window.isFunction = function(foo){ return foo instanceof Function }
 window.isNotFunction = function(foo){ return false === isFunction(foo) }
 window.isString = function(foo)  { return 'string' === typeof(foo) }
 window.isNotString = function(foo){return false === isString(foo)}
-window.isObject = function(foo)  { return STRobject == typeof(foo) && !isArray(foo) }
+window.isObject = function(foo)  { return 'object' == typeof(foo) && !isArray(foo) }
 window.isArray = function(foo)   { return Array.isArray(foo) }
 window.isNotArray = function(foo){return false === isArray(foo) }
 

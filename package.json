@@ -1,8 +1,8 @@
 {
-  "name": "_NODEJS_FRAMEWORK_",
-  "productName": "_NODEJS_FRAMEWORK_",
+  "name": "Doc-Tagger",
+  "productName": "DocTagger",
   "version": "0.0.1",
-  "description": "_APPDESCRIPTION_",
+  "description": "Pour commenter des textes bruts.",
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
