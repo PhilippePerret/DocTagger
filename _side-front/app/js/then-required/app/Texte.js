@@ -6,6 +6,7 @@ class Texte {
 
   static init(){
     this.VALID_EXTENSIONS = ['md','mmd','text','txt','markdown']
+    this.fontSize = 13
   }
 
   /**
@@ -42,6 +43,38 @@ class Texte {
     texte = new Texte('#document', textePath)
     texte.setContent(IO.loadSync(textePath))
     texte.traite()
+    UI.prepareForTexte(texte)
+  }
+
+  // Pour augmenter la taille du texte
+  static sizeUp(){
+    this.fontSize = this.fontSize + 0.2 ;
+    this.applyFontSize()
+    // La mémoriser pour la prochaine fois
+    // TODO
+  }
+  static sizeDown(){
+    this.fontSize = this.fontSize - 0.2 ;
+    this.applyFontSize()
+    // La mémoriser pour la prochaine fois
+    // TODO
+  }
+
+  // TODO pouvoir changer
+  static get fontFamily(){
+    return 'Avenir'
+  }
+
+  /**
+    Méthode appelée quand on clique sur un bouton qui nécessite un
+    texte chargé et qu'il n'y en a pas.
+  **/
+  static buttonRequiresTexte(){
+    console.warn("Il faut charer un texte pour pouvoir utiliser cette fonction.")
+  }
+
+  static applyFontSize(){
+    UI.divDocument.style.fontSize = `${this.fontSize}pt`
   }
 
   // ---------------------------------------------------------------------
@@ -78,6 +111,15 @@ class Texte {
     console.info("--- Texte préparé. ---")
     this.comments.displayIfExists()
   }
+
+  exportPDF(){
+    this.pdfExporter.export()
+  }
+
+  get pdfExporter(){
+    return this._pdfexporter || (this._pdfexporter = new TextePDF(this))
+  }
+
   get comments(){
     return this._comments || (this._comments = new TexteComments(this))
   }

@@ -1,11 +1,12 @@
 'use strict';
 
 const COMMENT_TYPES = {
-  neu: {name: 'neutre',       id: 'neu',  key: 'x'},
-  pos: {name: 'positif',      id: 'pos',  key: 'p'},
-  neg: {name: 'négatif',      id: 'neg',  key: 'n'},
-  ort: {name: 'orthographe',  id: 'ort',  key: 'l'},
-  que: {name: 'question',     id: 'que',  key: 'q'}
+    neu: {name: 'neutre',       id: 'neu',  key: 'x'}
+  , pos: {name: 'positif',      id: 'pos',  key: 'p'}
+  , neg: {name: 'négatif',      id: 'neg',  key: 'n'}
+  , ort: {name: 'orthographe',  id: 'ort',  key: 'l'}
+  , sty: {name: 'style',        id: 'sty',  key: 's'}
+  , que: {name: 'question',     id: 'que',  key: 'q'}
 }
 
 class Comment {

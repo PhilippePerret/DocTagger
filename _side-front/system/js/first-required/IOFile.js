@@ -152,11 +152,9 @@ execSave(){
     this.endSavingInAnyCase()
     if(e){
       error(`Erreur au cours de l'enregistrement du fichier : ${e}`)
-      log.error(e)
-      log.error("CODE FAUTIF :\n")
-      log.warn(RC + this.savedcode)
+      console.warn(RC + this.savedcode)
     }
-    log.info('<- IOFile#save (retour false après erreur)')
+    console.info('<- IOFile#save (retour false après erreur)')
   } finally {
     delete this.savedcode
   }
@@ -171,7 +169,6 @@ afterTempSaved(err){
     this.isBackupable ? this.backup() : this.endSave()
   } catch (e) {
     this.endSavingInAnyCase()
-    log.error(e)
     error(e)
     return false
   }

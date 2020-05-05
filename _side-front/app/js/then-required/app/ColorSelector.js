@@ -32,6 +32,7 @@ class ColorSelector  {
         , 5:{id:5, name:'bleu clair', value:'#98f5ff'}
         , 6:{id:6, name:'vert',       value:'#bbf96e'}
         , 7:{id:7, name:'orange',     value:'#fdc391'}
+        , 8:{id:8, name:'rouge fort', value:'#FF3333'}
       }
     } return this._colors
   }

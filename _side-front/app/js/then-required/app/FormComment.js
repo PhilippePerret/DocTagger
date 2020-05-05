@@ -19,11 +19,15 @@ class FormComment {
     this.obj.classList.add('opened')
     this.textareaContent.focus()
     this.textareaContent.select()
+    this.oldOnkeypress = window.onkeydown
+    window.onkeydown = this.onKeyPress.bind(this)
   }
   static close(){
     this.obj.classList.add('closed')
     this.obj.classList.remove('opened')
     this.reset()
+    // Remettre les anciens observateur
+    window.onkeydown = this.oldOnkeypress
   }
   static init(){
     this.obj = DGet('#form-comment')
@@ -40,6 +44,20 @@ class FormComment {
     this.menuIntensity = this.obj.querySelector('#comment-intensity')
     this.btnSave = DGet('#btn-save-comment')
     this.btnSave.addEventListener('click', this.onClickSave.bind(this))
+  }
+
+  static onKeyPress(e){
+    // console.log("-> onKeyPress", e)
+    if ( e.metaKey ) {
+      if ( e.key == 't'){
+        this.focusOnType()
+      } else if (e.key == 'k') {
+        this.colorSelector.open()
+      } else if (e.key == 'i') {
+        this.focusOnIntensity()
+      }
+      return stopEvent(e)
+    }
   }
 
   static onClickSave(ev){
@@ -64,6 +82,13 @@ class FormComment {
       , colorId: this.colorSelector.value
       , author: UI.FieldAuthorDim.value // hors du formulaire
     }
+  }
+
+  static focusOnType(){
+    this.menuTypes.focus()
+  }
+  static focusOnIntensity(){
+    this.menuIntensity.focus()
   }
 
 }
